@@ -12,7 +12,7 @@ pluginManagement {
 }
 
 plugins {
-    id("app.reseam.workspace") version "0.28.0"
+    id("app.reseam.workspace") version "0.30.0"
 }
 
 rootProject.name = "valenced"
