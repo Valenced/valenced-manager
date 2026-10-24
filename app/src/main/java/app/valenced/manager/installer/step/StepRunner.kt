@@ -149,7 +149,7 @@ class StepRunner(
      * Run all the [steps] in order
      */
     suspend fun runAll(): Throwable? {
-        for (step in steps) {
+        for ((index, step) in steps.withIndex()) {
             if (completed) return null // Failsafe in case runner is incorrectly marked as not completed too early
 
             currentStep = step
@@ -163,8 +163,10 @@ class StepRunner(
 
             // Add delay for human psychology and
             // better group visibility in UI (the active group can change way too fast)
-            if (!preferenceManager.isDeveloper && step.durationMs < 1000) {
-                delay(1000L - step.durationMs)
+            val groupEnds = steps.getOrNull(index + 1)?.group != step.group
+            if (groupEnds && !preferenceManager.isDeveloper) {
+                val groupMs = steps.filter { it.group == step.group }.sumOf { it.durationMs }
+                if (groupMs < 1000) delay(1000L - groupMs)
             }
         }
 
