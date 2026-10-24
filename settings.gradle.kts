@@ -1,4 +1,4 @@
-rootProject.name = "revenge-manager"
+rootProject.name = "valenced-manager"
 
 pluginManagement {
     repositories {
@@ -10,7 +10,7 @@ pluginManagement {
 
 include(":app")
 
-// The Revenge patch bundle, packed into the app's assets.
+// The Valenced patch bundle, packed into the app's assets.
 includeBuild("patches")
 
 // A local Reseam engine checkout replaces the published SDK.

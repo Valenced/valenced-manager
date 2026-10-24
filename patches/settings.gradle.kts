@@ -15,4 +15,4 @@ plugins {
     id("app.reseam.workspace") version "0.28.0"
 }
 
-rootProject.name = "revenge"
+rootProject.name = "valenced"

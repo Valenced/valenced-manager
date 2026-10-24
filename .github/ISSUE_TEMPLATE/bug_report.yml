@@ -6,13 +6,13 @@ body:
   - type: markdown
     attributes:
       value: |
-        # Revenge Manager bug report
+        # Valenced Manager bug report
 
         Before creating a new bug report, please keep the following in mind:
 
-        - **Do not submit a duplicate bug report**: Search for existing bug reports [here](https://github.com/revenge-mod/revenge-manager/issues?q=label%3A%22Bug+report%22).
-        - **Review the contribution guidelines**: Make sure your bug report adheres to it. You can find the guidelines [here](https://github.com/revenge-mod/revenge-manager/blob/main/CONTRIBUTING.md).
-        - **Do not use the issue page for support**: If you need help or have questions, join us on [Discord](https://discord.gg/ddcQf3s2Uq).
+        - **Do not submit a duplicate bug report**: Search for existing bug reports [here](https://github.com/Valenced/valenced-manager/issues?q=label%3A%22Bug+report%22).
+        - **Review the contribution guidelines**: Make sure your bug report adheres to it. You can find the guidelines [here](https://github.com/Valenced/valenced-manager/blob/main/CONTRIBUTING.md).
+        - **Do not use the issue page for support**: If you need help or have questions, join us on [Discord](https://discord.com/invite/dtBTQHYSx4).
   - type: textarea
     attributes:
       label: Bug description

@@ -8,7 +8,7 @@ plugins {
     publishing
 }
 
-/** Copies the Revenge patch bundle built by the included `patches` build into the app's assets. */
+/** Copies the Valenced patch bundle built by the included `patches` build into the app's assets. */
 abstract class StageBundle : DefaultTask() {
     @get:InputFile
     abstract val bundle: RegularFileProperty
@@ -18,34 +18,34 @@ abstract class StageBundle : DefaultTask() {
 
     @TaskAction
     fun stage() {
-        bundle.get().asFile.copyTo(assets.file("revenge.reseam").get().asFile, overwrite = true)
+        bundle.get().asFile.copyTo(assets.file("valenced.reseam").get().asFile, overwrite = true)
     }
 }
 
 val stageBundle =
     tasks.register<StageBundle>("stageBundle") {
         dependsOn(gradle.includedBuild("patches").task(":bundle"))
-        bundle = rootProject.layout.projectDirectory.file("patches/build/reseam/revenge.reseam")
+        bundle = rootProject.layout.projectDirectory.file("patches/build/reseam/valenced.reseam")
     }
 
 android {
-    namespace = "app.revenge.manager"
+    namespace = "app.valenced.manager"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "app.revenge.manager"
+        applicationId = "app.valenced.manager"
         minSdk = 28
         targetSdk = 34
         versionName = version.toString()
         versionCode = versionName!!.removePrefix("v").split("-").first().replace(".", "").toInt()
 
-        buildConfigField("String", "MOD_NAME", "\"Revenge\"")
-        buildConfigField("String", "MANAGER_NAME", "\"RevengeManager\"")
-        buildConfigField("String", "REPO", "\"revenge-mod/bundle\"")
-        buildConfigField("String", "ORG_LINK", "\"https://github.com/revenge-mod\"")
-        buildConfigField("String", "INVITE_LINK", "\"https://discord.gg/ddcQf3s2Uq\"")
-        buildConfigField("String", "MODDED_APP_PACKAGE_NAME", "\"app.revenge\"")
-        buildConfigField("int", "MODDED_APP_ICON", "0xFEB23A42")
+        buildConfigField("String", "MOD_NAME", "\"Valenced\"")
+        buildConfigField("String", "MANAGER_NAME", "\"ValencedManager\"")
+        buildConfigField("String", "REPO", "\"Valenced/valenced\"")
+        buildConfigField("String", "ORG_LINK", "\"https://github.com/Valenced\"")
+        buildConfigField("String", "INVITE_LINK", "\"https://discord.com/invite/dtBTQHYSx4\"")
+        buildConfigField("String", "MODDED_APP_PACKAGE_NAME", "\"app.valenced\"")
+        buildConfigField("int", "MODDED_APP_ICON", "0xFF37EBFF")
         buildConfigField("int", "MODDED_APP_ICON_ALPHA", "0xFFFBB33C")
         buildConfigField("int", "MODDED_APP_ICON_OTHER", "0xFFD3575E")
 
