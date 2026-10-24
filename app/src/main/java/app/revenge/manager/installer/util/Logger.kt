@@ -2,7 +2,6 @@ package app.revenge.manager.installer.util
 
 import android.util.Log
 import androidx.compose.runtime.Stable
-import org.lsposed.patch.util.Logger
 
 /**
  * Used to log events done during the patching process
@@ -12,7 +11,7 @@ import org.lsposed.patch.util.Logger
 @Stable
 class Logger(
     private val tag: String
-): Logger() {
+) {
 
     /**
      * All logs made with this [Logger]
@@ -22,7 +21,7 @@ class Logger(
     /**
      * Prints a debug message to logcat and stores it in [logs]
      */
-    override fun d(msg: String?) {
+    fun d(msg: String?) {
         log(msg, LogEntry.Level.DEBUG)
         Log.d(tag, msg.toString())
     }
@@ -30,7 +29,7 @@ class Logger(
     /**
      * Prints an info message to logcat and stores it in [logs]
      */
-    override fun i(msg: String?) {
+    fun i(msg: String?) {
         log(msg, LogEntry.Level.INFO)
         Log.i(tag, msg.toString())
     }
@@ -38,9 +37,17 @@ class Logger(
     /**
      * Prints an error message to logcat and stores it in [logs]
      */
-    override fun e(msg: String?) {
+    fun e(msg: String?) {
         log(msg, LogEntry.Level.ERROR)
         Log.e(tag, msg.toString())
+    }
+
+    /**
+     * Prints a warning to logcat and stores it in [logs]
+     */
+    fun w(msg: String?) {
+        log(msg, LogEntry.Level.INFO)
+        Log.w(tag, msg.toString())
     }
 
     /**

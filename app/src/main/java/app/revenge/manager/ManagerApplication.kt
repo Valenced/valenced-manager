@@ -7,6 +7,7 @@ import android.content.Context
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import app.reseam.sdk.ReseamAndroidHost
 import app.revenge.manager.di.httpModule
 import app.revenge.manager.di.managerModule
 import app.revenge.manager.di.repositoryModule
@@ -22,6 +23,7 @@ class ManagerApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        ReseamAndroidHost.setClassLoader(classLoader)
         initNotificationChannels()
 
         startKoin {

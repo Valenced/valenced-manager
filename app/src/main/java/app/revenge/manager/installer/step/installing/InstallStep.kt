@@ -24,10 +24,10 @@ import java.io.File
  * @see SessionInstaller
  * @see ShizukuInstaller
  *
- * @param lspatchedDir Where all the patched APKs are
+ * @param apksDir Where all the patched APKs are
  */
 class InstallStep(
-    private val lspatchedDir: File
+    private val apksDir: File
 ): Step() {
 
     private val preferences: PreferenceManager by inject()
@@ -38,9 +38,9 @@ class InstallStep(
 
     override suspend fun run(runner: StepRunner) {
         runner.logger.i("Installing apks")
-        val files = lspatchedDir.listFiles()
+        val files = apksDir.listFiles()
             ?.takeIf { it.isNotEmpty() }
-            ?: throw Error("Missing APKs from LSPatch step; failure likely")
+            ?: throw Error("Missing APKs from patching step; failure likely")
 
         val installMethod = if (preferences.installMethod == InstallMethod.SHIZUKU && !ShizukuPermissions.waitShizukuPermissions()) {
             // Temporarily use DEFAULT if SHIZUKU permissions are not granted

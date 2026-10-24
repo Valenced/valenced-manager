@@ -1,14 +1,14 @@
 [versions]
 # Plugins
-agp = "8.6.0"
-kotlin = "2.0.20"
+agp = "9.4.1"
+kotlin = "2.4.20"
 
 # AndroidX
 androidx-core-ktx = "1.13.1"
 androidx-core-splashscreen = "1.0.1"
 androidx-lifecycle-runtime = "2.8.6"
 androidx-paging-compose = "3.3.2"
-androidx-work-runtime = "2.9.1"
+androidx-work-runtime = "2.12.0"
 
 # Compose
 compose-activity = "1.9.2"
@@ -17,15 +17,14 @@ compose-bom = "2024.09.03"
 # Misc.
 aboutlibraries = "11.1.3"
 accompanist = "0.34.0"
-binary-resources = "2.0.0"
 coil = "2.6.0"
 koin = "3.5.6"
+reseam = "0.28.0"
 kotlinx-datetime = "0.5.0"
 kotlinx-collections = "0.3.7"
 ktor = "2.3.12"
 shizuku = "13.1.0"
 voyager = "1.1.0-alpha04"
-zip-android = "2.1.1"
 
 [libraries]
 
@@ -79,10 +78,9 @@ voyager-koin = { group = "cafe.adriel.voyager", name = "voyager-koin", version.r
 
 # Misc.
 aboutlibraries-core = { group = "com.mikepenz", name = "aboutlibraries", version.ref = "aboutlibraries" }
-binaryResources = { module = "com.aliucord:binary-resources", version.ref = "binary-resources" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlinx-collections = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinx-collections" }
-zip-android = { group = "io.github.diamondminer88", name = "zip-android", version.ref = "zip-android" }
+reseam-sdk = { group = "app.reseam", name = "reseam-sdk", version.ref = "reseam" }
 
 [bundles]
 accompanist = ["accompanist-pager", "accompanist-permissions", "accompanist-systemuicontroller"]
@@ -99,5 +97,4 @@ aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "abo
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

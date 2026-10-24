@@ -15,10 +15,7 @@ import app.revenge.manager.installer.step.download.DownloadLibsStep
 import app.revenge.manager.installer.step.download.DownloadResourcesStep
 import app.revenge.manager.installer.step.download.DownloadModStep
 import app.revenge.manager.installer.step.installing.InstallStep
-import app.revenge.manager.installer.step.patching.AddModStep
-import app.revenge.manager.installer.step.patching.PatchManifestsStep
-import app.revenge.manager.installer.step.patching.PresignApksStep
-import app.revenge.manager.installer.step.patching.ReplaceIconStep
+import app.revenge.manager.installer.step.patching.PatchStep
 import app.revenge.manager.installer.util.LogEntry
 import app.revenge.manager.installer.util.Logger
 import app.revenge.manager.utils.DiscordVersion
@@ -80,19 +77,14 @@ class StepRunner(
     private val discordCacheDir = cacheDir.resolve(discordVersion.toVersionCode())
 
     /**
-     * Working directory where apks are directly modified (i.e. replacing the app icon)
+     * Working directory with copies of the downloads that get patched
      */
     private val patchedDir = discordCacheDir.resolve("patched").also { it.deleteRecursively() }
 
     /**
-     * Where apks are moved to once signed
+     * Where the patched and signed apks are written
      */
     private val signedDir = discordCacheDir.resolve("signed").also { it.deleteRecursively() }
-
-    /**
-     * Output directory for LSPatch
-     */
-    private val lspatchedDir = patchedDir.resolve("lspatched").also { it.deleteRecursively() }
 
     var currentStep by mutableStateOf<Step?>(null)
         private set
@@ -123,13 +115,10 @@ class StepRunner(
         add(DownloadModStep(patchedDir))
 
         // Patching
-        if (preferenceManager.patchIcon) add(ReplaceIconStep())
-        add(PatchManifestsStep())
-        add(PresignApksStep(signedDir))
-        add(AddModStep(signedDir, lspatchedDir))
+        add(PatchStep(patchedDir, signedDir))
 
         // Installing
-        add(InstallStep(lspatchedDir))
+        add(InstallStep(signedDir))
     }.toImmutableList()
 
     /**

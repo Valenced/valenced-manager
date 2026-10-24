@@ -1,17 +1,36 @@
-import java.io.ByteArrayOutputStream
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.aboutlibraries)
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     publishing
 }
 
+/** Copies the Revenge patch bundle built by the included `patches` build into the app's assets. */
+abstract class StageBundle : DefaultTask() {
+    @get:InputFile
+    abstract val bundle: RegularFileProperty
+
+    @get:OutputDirectory
+    abstract val assets: DirectoryProperty
+
+    @TaskAction
+    fun stage() {
+        bundle.get().asFile.copyTo(assets.file("revenge.reseam").get().asFile, overwrite = true)
+    }
+}
+
+val stageBundle =
+    tasks.register<StageBundle>("stageBundle") {
+        dependsOn(gradle.includedBuild("patches").task(":bundle"))
+        bundle = rootProject.layout.projectDirectory.file("patches/build/reseam/revenge.reseam")
+    }
+
 android {
     namespace = "app.revenge.manager"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "app.revenge.manager"
@@ -19,7 +38,6 @@ android {
         targetSdk = 34
         versionName = version.toString()
         versionCode = versionName!!.removePrefix("v").split("-").first().replace(".", "").toInt()
-
 
         buildConfigField("String", "MOD_NAME", "\"Revenge\"")
         buildConfigField("String", "MANAGER_NAME", "\"RevengeManager\"")
@@ -65,17 +83,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    kotlinOptions {
-        jvmTarget = "11"
-        freeCompilerArgs += listOf(
-            "-Xcontext-receivers",
-            "-P",
-            "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${buildDir.resolve("report").absolutePath}",
-        )
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     buildFeatures {
@@ -83,19 +92,11 @@ android {
         buildConfig = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.6"
-    }
-
-    applicationVariants.all {
-        outputs.all {
-            this as com.android.build.gradle.internal.api.ApkVariantOutputImpl
-
-            outputFileName = "${rootProject.name}-$version.apk"
-        }
-    }
-
     androidComponents {
+        onVariants {
+            it.sources.assets?.addGeneratedSourceDirectory(stageBundle, StageBundle::assets)
+        }
+
         onVariants(selector().withBuildType("release")) {
             it.packaging.resources.excludes.apply {
                 // Debug metadata
@@ -114,12 +115,20 @@ android {
         }
     }
 
-    configurations {
-        all {
-            exclude(module = "listenablefuture")
-            exclude(module = "error_prone_annotations")
-        }
+}
+
+base {
+    archivesName = "${rootProject.name}-$version"
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_17
     }
+}
+
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("report")
 }
 
 dependencies {
@@ -134,21 +143,10 @@ dependencies {
     implementation(libs.bundles.shizuku)
     implementation(libs.bundles.voyager)
 
-    implementation(files("libs/lspatch.aar"))
-
     implementation(libs.aboutlibraries.core)
-    implementation(libs.binaryResources) {
-        exclude(module = "checker-qual")
-        exclude(module = "jsr305")
-        exclude(module = "guava")
-    }
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.collections)
-    implementation(libs.zip.android) {
-        artifact {
-            type = "aar"
-        }
-    }
+    implementation(libs.reseam.sdk)
 }
 
 fun getCurrentBranch(): String? =
@@ -167,20 +165,16 @@ fun hasLocalChanges(): Boolean =
 
 fun exec(vararg command: String): String? {
     return try {
-        val stdout = ByteArrayOutputStream()
-        val errout = ByteArrayOutputStream()
-
-        exec {
+        val result = providers.exec {
             commandLine = command.toList()
-            standardOutput = stdout
-            errorOutput = errout
             isIgnoreExitValue = true
         }
+        val errout = result.standardError.asText.get()
 
-        if (errout.size() > 0)
-            throw Error(errout.toString(Charsets.UTF_8))
+        if (errout.isNotEmpty())
+            throw Error(errout)
 
-        stdout.toString(Charsets.UTF_8).trim()
+        result.standardOutput.asText.get().trim()
     } catch (e: Throwable) {
         e.printStackTrace()
         null

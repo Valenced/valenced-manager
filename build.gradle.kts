@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.aboutlibraries) apply false
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
-    alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.compose.compiler) apply false
 }
 
@@ -14,7 +13,8 @@ allprojects {
     repositories {
         mavenCentral()
         google()
-        maven("https://maven.aliucord.com/snapshots")
-        maven("https://jitpack.io")
+        maven("https://git.reseam.app/api/packages/reseam/maven") {
+            mavenContent { includeGroup("app.reseam") }
+        }
     }
 }

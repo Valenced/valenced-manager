@@ -34,11 +34,7 @@
     <string name="step_dl_res">Downloading resources apk</string>
     <string name="step_dl_mod">Downloading Revenge</string>
 
-    <string name="step_change_icon">Changing app icon</string>
-    <string name="step_patch_manifests">Patching app manifests</string>
-    <string name="step_add_mod">Injecting Revenge</string>
-
-    <string name="step_signing">Signing APKs</string>
+    <string name="step_patch">Patching Discord</string>
     <string name="step_installing">Installing APKs</string>
 
     <string name="installer_success">Installed successfully</string>
