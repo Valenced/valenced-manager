@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import app.valenced.manager.BuildConfig
 import app.valenced.manager.R
+import app.valenced.manager.domain.manager.BundleManager
 import app.valenced.manager.domain.manager.PreferenceManager
 import app.valenced.manager.utils.DiscordVersion
 import org.koin.androidx.compose.get
@@ -26,12 +27,13 @@ fun ThemePreview(
     modifier: Modifier = Modifier
 ) {
     val prefs: PreferenceManager = get()
+    val bundleManager: BundleManager = get()
     val light = colorScheme.background.luminance() > 0.5f
     val layerModifier = Modifier.height(300.dp)
-    val iconColor = remember(prefs.patchIcon, prefs.channel) {
+    val iconColor = remember(prefs.patchIcon, bundleManager.discordVersion) {
         when {
             prefs.patchIcon -> Color(BuildConfig.MODDED_APP_ICON)
-            prefs.channel == DiscordVersion.Type.ALPHA -> Color(BuildConfig.MODDED_APP_ICON_ALPHA)
+            bundleManager.discordVersion?.type == DiscordVersion.Type.ALPHA -> Color(BuildConfig.MODDED_APP_ICON_ALPHA)
             else -> Color(BuildConfig.MODDED_APP_ICON_OTHER)
         }
     }

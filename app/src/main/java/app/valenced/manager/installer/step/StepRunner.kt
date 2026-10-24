@@ -115,7 +115,7 @@ class StepRunner(
         add(DownloadModStep(patchedDir))
 
         // Patching
-        add(PatchStep(patchedDir, signedDir))
+        add(PatchStep(signedDir))
 
         // Installing
         add(InstallStep(signedDir))

@@ -14,6 +14,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import app.valenced.manager.BuildConfig
 import app.valenced.manager.R
+import app.valenced.manager.domain.manager.BundleManager
 import app.valenced.manager.domain.manager.DownloadManager
 import app.valenced.manager.domain.manager.DownloadResult
 import app.valenced.manager.domain.manager.InstallManager
@@ -41,6 +42,7 @@ class HomeViewModel(
     val context: Context,
     val prefs: PreferenceManager,
     val installManager: InstallManager,
+    val bundleManager: BundleManager,
     private val downloadManager: DownloadManager
 ) : ScreenModel {
 
@@ -48,9 +50,6 @@ class HomeViewModel(
         Environment.getExternalStorageDirectory(),
         Environment.DIRECTORY_DOWNLOADS
     ).resolve(BuildConfig.MANAGER_NAME).also { it.mkdirs() }
-
-    var discordVersions by mutableStateOf<Map<DiscordVersion.Type, DiscordVersion?>?>(null)
-        private set
 
     var release by mutableStateOf<Release?>(null)
         private set
@@ -63,15 +62,11 @@ class HomeViewModel(
     )
 
     init {
-        getDiscordVersions()
-        checkForUpdate()
-    }
-
-    fun getDiscordVersions() {
         screenModelScope.launch {
-            discordVersions = repo.getLatestDiscordVersions().dataOrNull
+            bundleManager.load()
             if (prefs.autoClearCache) autoClearCache()
         }
+        checkForUpdate()
     }
 
     fun launchMod() {
@@ -100,12 +95,9 @@ class HomeViewModel(
     private fun autoClearCache() {
         val currentVersion =
             DiscordVersion.fromVersionCode(installManager.current?.versionCode.toString()) ?: return
-        val latestVersion = when {
-            prefs.discordVersion.isBlank() -> discordVersions?.get(prefs.channel)
-            else -> DiscordVersion.fromVersionCode(prefs.discordVersion)
-        } ?: return
+        val targetVersion = bundleManager.discordVersion ?: return
 
-        if (latestVersion > currentVersion) {
+        if (targetVersion > currentVersion) {
             for (file in (context.externalCacheDir ?: context.cacheDir).listFiles()
                 ?: emptyArray()) {
                 if (file.isDirectory) file.deleteRecursively()

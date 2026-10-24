@@ -5,8 +5,8 @@ package app.valenced.patches.discord
 
 import app.reseam.patch.patch
 
-/** Discord's launcher icons in the Alpha build, both adaptive icons over a channel colour. */
-private val LAUNCHER_ICONS = listOf("ic_logo_square_canary", "ic_logo_round_canary")
+/** Discord's launcher icons in the Stable build, both adaptive icons over a channel colour. */
+private val LAUNCHER_ICONS = listOf("ic_logo_square", "ic_logo_round")
 
 private const val BACKGROUND = "valenced_icon_background"
 

@@ -1,7 +1,5 @@
 package app.valenced.manager.utils
 
-import androidx.annotation.StringRes
-import app.valenced.manager.R
 import java.io.Serializable
 
 data class DiscordVersion(
@@ -10,10 +8,10 @@ data class DiscordVersion(
     val type: Type
 ) : Serializable, Comparable<DiscordVersion> {
 
-    enum class Type(val label: String, @StringRes val labelRes: Int) {
-        STABLE("Stable", R.string.channel_stable),
-        BETA("Beta", R.string.channel_beta),
-        ALPHA("Alpha", R.string.channel_alpha)
+    enum class Type(val label: String) {
+        STABLE("Stable"),
+        BETA("Beta"),
+        ALPHA("Alpha")
     }
 
     override fun compareTo(other: DiscordVersion): Int =
@@ -24,6 +22,14 @@ data class DiscordVersion(
     fun toVersionCode() = "$major${type.ordinal}${if (minor < 10) 0 else ""}${minor}"
 
     companion object {
+
+        /** Parses a version name in the form [toString] writes, such as `350.8 - Stable`. */
+        fun fromVersionName(name: String): DiscordVersion? {
+            val (number, label) = name.split(" - ", limit = 2).takeIf { it.size == 2 } ?: return null
+            val (major, minor) = number.split(".").mapNotNull { it.toIntOrNull() }.takeIf { it.size == 2 } ?: return null
+            val type = Type.entries.firstOrNull { it.label == label } ?: return null
+            return DiscordVersion(major, minor, type)
+        }
 
         fun fromVersionCode(string: String): DiscordVersion? = with(string) {
             if (length < 4) return@with null

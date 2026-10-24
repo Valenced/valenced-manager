@@ -1,7 +1,5 @@
 package app.valenced.manager.installer.step.patching
 
-import android.content.Context
-import app.reseam.sdk.InspectRequest
 import app.reseam.sdk.LogLevel
 import app.reseam.sdk.OptionValue
 import app.reseam.sdk.PatchOutput
@@ -10,10 +8,10 @@ import app.reseam.sdk.PatchSelection
 import app.reseam.sdk.PatchStatus
 import app.reseam.sdk.RunEvent
 import app.reseam.sdk.Trust
-import app.reseam.sdk.inspect
 import app.reseam.sdk.patch
 import app.valenced.manager.BuildConfig
 import app.valenced.manager.R
+import app.valenced.manager.domain.manager.BundleManager
 import app.valenced.manager.domain.manager.PreferenceManager
 import app.valenced.manager.installer.step.Step
 import app.valenced.manager.installer.step.StepGroup
@@ -33,16 +31,14 @@ import java.io.File
 /**
  * Patches Discord with the Valenced bundle using Reseam, then signs it
  *
- * @param workingDir Where the bundle is unpacked from the app's assets
  * @param outputDir Where the patched and signed apks are written
  */
 class PatchStep(
-    private val workingDir: File,
     private val outputDir: File
 ) : Step() {
 
     private val preferences: PreferenceManager by inject()
-    private val context: Context by inject()
+    private val bundleManager: BundleManager by inject()
 
     override val group = StepGroup.PATCHING
     override val nameRes = R.string.step_patch
@@ -54,14 +50,13 @@ class PatchStep(
         val resApk = runner.getCompletedStep<DownloadResourcesStep>().workingCopy
         val module = runner.getCompletedStep<DownloadModStep>().workingCopy
 
-        val bundle = workingDir.resolve(BUNDLE_ASSET)
-        context.assets.open(BUNDLE_ASSET).use { input -> bundle.outputStream().use { input.copyTo(it) } }
+        val bundle = bundleManager.load()
 
         val request = PatchRequest(
             apkPath = baseApk.absolutePath,
             splitPaths = listOf(libsApk, langApk, resApk).map { it.absolutePath },
-            bundlePaths = listOf(bundle.absolutePath),
-            trust = Trust(keys = listOf(signer(bundle))),
+            bundlePaths = listOf(bundle.file.absolutePath),
+            trust = Trust(keys = listOf(bundle.signer)),
             selection = selection(module),
             output = PatchOutput.SplitDir(outputDir.absolutePath),
             signing = Signer.keyFiles,
@@ -76,13 +71,6 @@ class PatchStep(
                 (metrics.peakRssBytes?.let { ", peak memory ${it / 1_048_576u} MB" } ?: "")
         )
     }
-
-    /**
-     * The key the bundle was signed with. It ships inside this app, so it is as trusted as the app.
-     */
-    private fun signer(bundle: File) = inspect(
-        InspectRequest(splitPaths = emptyList(), bundlePaths = listOf(bundle.absolutePath), trust = Trust(keys = emptyList()))
-    ).bundles.single().publicKey
 
     private fun selection(module: File) = PatchSelection(
         enable = listOfNotNull(DEBUGGABLE.takeIf { preferences.debuggable }),
@@ -113,8 +101,6 @@ class PatchStep(
     }
 
     private companion object {
-        const val BUNDLE_ASSET = "valenced.reseam"
-
         // Patches in the Valenced bundle
         const val VALENCED = "Valenced"
         const val PACKAGE_NAME = "Change package name"

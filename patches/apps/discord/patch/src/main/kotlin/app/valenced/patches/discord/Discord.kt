@@ -6,4 +6,4 @@ package app.valenced.patches.discord
 import app.reseam.patch.CompatiblePackage
 import app.reseam.patch.invoke
 
-val DISCORD: CompatiblePackage = "com.discord"("352.7 - Alpha")
+val DISCORD: CompatiblePackage = "com.discord"("350.8 - Stable")

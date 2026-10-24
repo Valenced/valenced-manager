@@ -7,7 +7,6 @@ import androidx.annotation.StringRes
 import app.valenced.manager.BuildConfig
 import app.valenced.manager.R
 import app.valenced.manager.domain.manager.base.BasePreferenceManager
-import app.valenced.manager.utils.DiscordVersion
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -21,8 +20,6 @@ class PreferenceManager(context: Context) :
     var packageName by stringPreference("package_name", BuildConfig.MODDED_APP_PACKAGE_NAME)
 
     var appName by stringPreference("app_name", BuildConfig.MOD_NAME)
-
-    var discordVersion by stringPreference("discord_version", "")
 
     var moduleVersion by stringPreference("module_version", "")
 
@@ -39,8 +36,6 @@ class PreferenceManager(context: Context) :
     var autoClearCache by booleanPreference("auto_clear_cache", true)
 
     var theme by enumPreference("theme", Theme.SYSTEM)
-
-    var channel by enumPreference("channel", DiscordVersion.Type.STABLE)
 
     var updateDuration by enumPreference("update_duration", UpdateCheckerDuration.HOURLY)
 

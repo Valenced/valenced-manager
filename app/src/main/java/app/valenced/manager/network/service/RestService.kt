@@ -1,8 +1,6 @@
 package app.valenced.manager.network.service
 
-import app.valenced.manager.domain.manager.PreferenceManager
 import app.valenced.manager.network.dto.Commit
-import app.valenced.manager.network.dto.Index
 import app.valenced.manager.network.dto.Release
 import io.ktor.client.request.parameter
 import io.ktor.client.request.url
@@ -10,19 +8,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class RestService(
-    private val httpService: HttpService,
-    private val prefs: PreferenceManager
+    private val httpService: HttpService
 ) {
 
     suspend fun getLatestRelease(repo: String) = withContext(Dispatchers.IO) {
         httpService.request<Release> {
             url("https://api.github.com/repos/$repo/releases/latest")
-        }
-    }
-
-    suspend fun getLatestDiscordVersions() = withContext(Dispatchers.IO) {
-        httpService.request<Index> {
-            url("${prefs.mirror.baseUrl}/tracker/index")
         }
     }
 

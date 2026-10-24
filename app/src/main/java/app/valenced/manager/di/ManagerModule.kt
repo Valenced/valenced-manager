@@ -1,5 +1,6 @@
 package app.valenced.manager.di
 
+import app.valenced.manager.domain.manager.BundleManager
 import app.valenced.manager.domain.manager.DownloadManager
 import app.valenced.manager.domain.manager.InstallManager
 import app.valenced.manager.domain.manager.PreferenceManager
@@ -10,4 +11,5 @@ val managerModule = module {
     singleOf(::DownloadManager)
     singleOf(::PreferenceManager)
     singleOf(::InstallManager)
+    singleOf(::BundleManager)
 }

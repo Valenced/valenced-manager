@@ -14,7 +14,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.OpenInNew
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedCard
@@ -71,13 +70,7 @@ class HomeScreen : Screen {
             DiscordVersion.fromVersionCode(viewModel.installManager.current?.versionCode.toString())
         }
 
-        val latestVersion =
-            remember(prefs.discordVersion, viewModel.discordVersions, prefs.channel) {
-                when {
-                    prefs.discordVersion.isBlank() -> viewModel.discordVersions?.get(prefs.channel)
-                    else -> DiscordVersion.fromVersionCode(prefs.discordVersion)
-                }
-            }
+        val targetVersion = viewModel.bundleManager.discordVersion
 
         // == Dialogs == //
 
@@ -117,7 +110,7 @@ class HomeScreen : Screen {
             ) {
                 AppIcon(
                     customIcon = prefs.patchIcon,
-                    releaseChannel = prefs.channel,
+                    releaseChannel = targetVersion?.type,
                     modifier = Modifier.size(60.dp)
                 )
 
@@ -142,12 +135,9 @@ class HomeScreen : Screen {
                         )
                     }
 
-                    val latestLabel =
-                        if (prefs.discordVersion.isNotBlank()) R.string.version_target else R.string.version_latest
-
-                    AnimatedVisibility(visible = latestVersion != null) {
+                    AnimatedVisibility(visible = targetVersion != null) {
                         Text(
-                            text = stringResource(latestLabel, latestVersion.toString()),
+                            text = stringResource(R.string.version_target, targetVersion.toString()),
                             style = MaterialTheme.typography.labelLarge,
                             color = LocalContentColor.current.copy(alpha = 0.5f),
                             textAlign = TextAlign.Center
@@ -157,16 +147,16 @@ class HomeScreen : Screen {
 
                 Button(
                     onClick = {
-                        navigator.navigate(InstallerScreen(latestVersion!!))
+                        navigator.navigate(InstallerScreen(targetVersion!!))
                     },
-                    enabled = latestVersion != null && (prefs.allowDowngrade || latestVersion >= (currentVersion ?: Constants.DUMMY_VERSION)),
+                    enabled = targetVersion != null && (prefs.allowDowngrade || targetVersion >= (currentVersion ?: Constants.DUMMY_VERSION)),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     val label = when {
-                        latestVersion == null -> R.string.msg_loading
+                        targetVersion == null -> R.string.msg_loading
                         currentVersion == null -> R.string.action_install
-                        currentVersion == latestVersion -> R.string.action_reinstall
-                        latestVersion > currentVersion -> R.string.action_update
+                        currentVersion == targetVersion -> R.string.action_reinstall
+                        targetVersion > currentVersion -> R.string.action_update
                         else -> if (prefs.allowDowngrade) R.string.msg_downgrade else R.string.msg_downgrade_disallowed
                     }
 
@@ -226,15 +216,8 @@ class HomeScreen : Screen {
 
     @Composable
     private fun Actions() {
-        val viewModel: HomeViewModel = getScreenModel()
         val navigator = LocalNavigator.currentOrThrow
 
-        IconButton(onClick = { viewModel.getDiscordVersions() }) {
-            Icon(
-                imageVector = Icons.Filled.Refresh,
-                contentDescription = stringResource(R.string.action_reload)
-            )
-        }
         IconButton(onClick = { navigator.navigate(SettingsScreen()) }) {
             Icon(
                 imageVector = Icons.Outlined.Settings,

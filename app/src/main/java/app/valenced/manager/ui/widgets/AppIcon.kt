@@ -16,7 +16,7 @@ import app.valenced.manager.utils.DiscordVersion
 @Composable
 fun AppIcon(
     customIcon: Boolean,
-    releaseChannel: DiscordVersion.Type,
+    releaseChannel: DiscordVersion.Type?,
     modifier: Modifier = Modifier
 ) {
     val iconColor = remember(customIcon, releaseChannel) {
