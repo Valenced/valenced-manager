@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/Valenced/valenced-manager/compare/v1.0.1...v1.0.2) (2026-10-25)
+
+
+### Bug Fixes
+
+* use engine 0.30.1, whose stripped native libraries shrink the APK ([daf3b2b](https://github.com/Valenced/valenced-manager/commit/daf3b2bacf0cb1e30acad33c4c228bae9b2fd2fe))
+
 ## [1.0.1](https://github.com/Valenced/valenced-manager/compare/v1.0.0...v1.0.1) (2026-10-25)
 
 
