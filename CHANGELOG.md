@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/Valenced/valenced-manager/compare/v1.0.0...v1.0.1) (2026-10-25)
+
+
+### Bug Fixes
+
+* stage only the current bundle into the app's assets ([7822f4e](https://github.com/Valenced/valenced-manager/commit/7822f4e6709c2e1a72358ccd1ff64e53bcc45e46))
+
 # 1.0.0 (2026-10-25)
 
 
