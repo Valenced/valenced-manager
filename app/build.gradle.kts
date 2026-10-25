@@ -18,7 +18,9 @@ abstract class StageBundle : DefaultTask() {
 
     @TaskAction
     fun stage() {
-        bundle.get().asFile.copyTo(assets.file("valenced.reseam").get().asFile, overwrite = true)
+        val dir = assets.get().asFile
+        dir.deleteRecursively()
+        bundle.get().asFile.copyTo(dir.resolve("valenced.reseam"))
     }
 }
 
