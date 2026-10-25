@@ -28,7 +28,6 @@ import app.valenced.manager.installer.shizuku.ShizukuPermissions
 import app.valenced.manager.network.dto.Release
 import app.valenced.manager.network.utils.CommitsPagingSource
 import app.valenced.manager.network.utils.dataOrNull
-import app.valenced.manager.network.utils.ifSuccessful
 import app.valenced.manager.utils.DiscordVersion
 import app.valenced.manager.utils.isMiui
 import app.valenced.manager.utils.showToast
@@ -63,8 +62,8 @@ class HomeViewModel(
 
     init {
         screenModelScope.launch {
-            bundleManager.load()
-            if (prefs.autoClearCache) autoClearCache()
+            // A failure is kept in BundleManager.problem for the screen to show.
+            if (runCatching { bundleManager.load(refresh = true) }.isSuccess && prefs.autoClearCache) autoClearCache()
         }
         checkForUpdate()
     }
@@ -111,13 +110,6 @@ class HomeViewModel(
             release?.let {
                 updateDownloadUrl = it.assets.firstOrNull { asset -> asset.name.endsWith(".apk") }?.browserDownloadUrl
                 showUpdateDialog = it.tagName.removePrefix("v") != BuildConfig.VERSION_NAME
-            }
-            repo.getLatestRelease("Valenced/valenced").ifSuccessful {
-                if (prefs.moduleVersion != it.tagName) {
-                    prefs.moduleVersion = it.tagName
-                    val module = File(cacheDir, "xposed.apk")
-                    if (module.exists()) module.delete()
-                }
             }
         }
     }

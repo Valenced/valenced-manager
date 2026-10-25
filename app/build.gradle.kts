@@ -7,27 +7,12 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-/** Copies the Valenced patch bundle built by the included `patches` build into the app's assets. */
-abstract class StageBundle : DefaultTask() {
-    @get:InputFile
-    abstract val bundle: RegularFileProperty
-
-    @get:OutputDirectory
-    abstract val assets: DirectoryProperty
-
-    @TaskAction
-    fun stage() {
-        val dir = assets.get().asFile
-        dir.deleteRecursively()
-        bundle.get().asFile.copyTo(dir.resolve("valenced.reseam"))
+/** Valenced's Reseam patches public key. */
+val patchesPublicKey = providers.gradleProperty("patchesPublicKey").orNull.orEmpty().also {
+    require(it.matches(Regex("[0-9a-f]{64}"))) {
+        "Set patchesPublicKey in gradle.properties to the hex public key Valenced patch bundle is signed with"
     }
 }
-
-val stageBundle =
-    tasks.register<StageBundle>("stageBundle") {
-        dependsOn(gradle.includedBuild("patches").task(":bundle"))
-        bundle = rootProject.layout.projectDirectory.file("patches/build/reseam/valenced.reseam")
-    }
 
 android {
     namespace = "app.valenced.manager"
@@ -43,6 +28,7 @@ android {
         buildConfigField("String", "MOD_NAME", "\"Valenced\"")
         buildConfigField("String", "MANAGER_NAME", "\"ValencedManager\"")
         buildConfigField("String", "REPO", "\"Valenced/valenced\"")
+        buildConfigField("String", "BUNDLE_PUBLIC_KEY", "\"$patchesPublicKey\"")
         buildConfigField("String", "ORG_LINK", "\"https://github.com/Valenced\"")
         buildConfigField("String", "INVITE_LINK", "\"https://discord.com/invite/dtBTQHYSx4\"")
         buildConfigField("String", "MODDED_APP_PACKAGE_NAME", "\"app.valenced\"")
@@ -94,10 +80,6 @@ android {
     }
 
     androidComponents {
-        onVariants {
-            it.sources.assets?.addGeneratedSourceDirectory(stageBundle, StageBundle::assets)
-        }
-
         onVariants(selector().withBuildType("release")) {
             it.packaging.resources.excludes.apply {
                 // Debug metadata

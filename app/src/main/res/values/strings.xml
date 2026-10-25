@@ -11,6 +11,7 @@
     <string name="msg_five_left">5 more taps</string>
     <string name="msg_two_left">2 more taps</string>
     <string name="msg_loading">Loading…</string>
+    <string name="msg_patches_unavailable">Patches unavailable</string>
     <string name="msg_downgrade">Downgrade</string>
     <string name="msg_downgrade_disallowed">Cannot downgrade, try uninstalling first</string>
     <string name="msg_unlocked">You are now a developer</string>

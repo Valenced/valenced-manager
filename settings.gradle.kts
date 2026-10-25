@@ -10,9 +10,6 @@ pluginManagement {
 
 include(":app")
 
-// The Valenced patch bundle, packed into the app's assets.
-includeBuild("patches")
-
 // A local Reseam engine checkout replaces the published SDK.
 (System.getenv("RESEAM_WORKSPACE") ?: providers.gradleProperty("reseam.workspace").orNull)
     ?.takeIf { it.isNotBlank() }

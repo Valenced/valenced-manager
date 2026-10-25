@@ -13,9 +13,6 @@ jobs:
         permissions:
             contents: write
         runs-on: ubuntu-latest
-        env:
-            RESEAM_BIN: ${{ github.workspace }}/engine/reseam
-            RESEAM_BUNDLE_KEY: ${{ github.workspace }}/bundle-signing.key
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -27,15 +24,6 @@ jobs:
               with:
                   distribution: "temurin"
                   java-version: "21"
-
-            # The app trusts the key its own bundle is signed with, so each build can make a new one.
-            - name: Install the Reseam CLI and a bundle signing key
-              run: |
-                  mkdir -p engine
-                  version=$(sed -n 's/.*id("app.reseam.workspace") version "\(.*\)".*/\1/p' patches/settings.gradle.kts)
-                  curl -fsSL -o engine/reseam https://cdn.reseam.app/engine/v$version/reseam-linux-x64
-                  chmod +x engine/reseam
-                  engine/reseam bundle keygen --out bundle-signing.key
 
             - name: Setup Gradle
               uses: gradle/actions/setup-gradle@v6

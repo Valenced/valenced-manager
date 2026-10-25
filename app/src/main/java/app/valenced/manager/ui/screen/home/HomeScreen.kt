@@ -143,6 +143,16 @@ class HomeScreen : Screen {
                             textAlign = TextAlign.Center
                         )
                     }
+
+                    val problem = viewModel.bundleManager.problem
+                    AnimatedVisibility(visible = problem != null) {
+                        Text(
+                            text = problem.orEmpty(),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.error,
+                            textAlign = TextAlign.Center
+                        )
+                    }
                 }
 
                 Button(
@@ -153,6 +163,7 @@ class HomeScreen : Screen {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     val label = when {
+                        targetVersion == null && viewModel.bundleManager.problem != null -> R.string.msg_patches_unavailable
                         targetVersion == null -> R.string.msg_loading
                         currentVersion == null -> R.string.action_install
                         currentVersion == targetVersion -> R.string.action_reinstall

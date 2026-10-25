@@ -24,7 +24,8 @@ class UpdateWorker(
         val currentVersion =
             DiscordVersion.fromVersionCode(installManager.current?.versionCode.toString())
                 ?: return Result.success()
-        val targetVersion = bundleManager.load().discordVersion
+        val targetVersion = runCatching { bundleManager.load(refresh = true) }.getOrNull()?.discordVersion
+            ?: return Result.retry()
 
         if (targetVersion > currentVersion) {
             context.sendBroadcast(
