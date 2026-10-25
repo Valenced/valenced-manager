@@ -1,7 +1,6 @@
 package app.valenced.manager.domain.manager
 
 import android.content.Context
-import android.os.Build
 import android.os.Environment
 import androidx.annotation.StringRes
 import app.valenced.manager.BuildConfig
@@ -78,9 +77,8 @@ enum class UpdateCheckerDuration(@StringRes val labelRes: Int, val time: Long, v
 }
 
 enum class Mirror(val baseUrl: String) {
-    DEFAULT("https://tracker.vendetta.rocks"),
-    NEXPID("https://tracker.vd.nexpid.xyz"),
-    USHIE("https://proxy.vd.ushie.dev")
+    DEFAULT("https://proxy.vd.ushie.dev"),
+    VENDETTA("https://tracker.vendetta.rocks"),
 }
 
 enum class InstallMethod(@StringRes val labelRes: Int) {
