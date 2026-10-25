@@ -16,7 +16,12 @@
     ],
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
-    "gradle-semantic-release-plugin",
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "sed -i 's/^version = .*/version = ${nextRelease.version}/' gradle.properties && ./gradlew assembleRelease --no-daemon"
+      }
+    ],
     [
       "@semantic-release/git",
       {

@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
-    publishing
 }
 
 /** Copies the Valenced patch bundle built by the included `patches` build into the app's assets. */
@@ -182,10 +181,3 @@ fun exec(vararg command: String): String? {
         null
     }
 }
-
-// Used by gradle-semantic-release-plugin.
-// Tracking: https://github.com/KengoTODA/gradle-semantic-release-plugin/issues/435.
-tasks.publish {
-    dependsOn("assembleRelease")
-}
-

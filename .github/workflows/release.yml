@@ -42,11 +42,6 @@ jobs:
               with:
                   cache-provider: basic
 
-            - name: Build
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: ./gradlew assembleRelease --no-daemon
-
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
