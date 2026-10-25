@@ -62,7 +62,7 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-                  KEYSTORE_ENTRY_ALIAS: ${{ secrets.KEYSTORE_ENTRY_ALIAS }}
+                  KEYSTORE_ENTRY_ALIAS: ${{ vars.KEYSTORE_ENTRY_ALIAS }}
                   KEYSTORE_ENTRY_PASSWORD: ${{ secrets.KEYSTORE_ENTRY_PASSWORD }}
               run: |
                   npx semantic-release
