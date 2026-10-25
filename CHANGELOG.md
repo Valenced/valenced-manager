@@ -1,3 +1,17 @@
+# [1.1.0](https://github.com/Valenced/valenced-manager/compare/v1.0.2...v1.1.0) (2026-10-25)
+
+
+### Bug Fixes
+
+* change brand color and icon size ([56e37dd](https://github.com/Valenced/valenced-manager/commit/56e37ddc8b98dbd34d0330aef6c087c8256a3318))
+* update mirrors ([e907d6a](https://github.com/Valenced/valenced-manager/commit/e907d6a1d4e461a20bd8f70b9ce1c821ed15d732))
+
+
+### Features
+
+* allow specifying custom patch bundle ([621b3fd](https://github.com/Valenced/valenced-manager/commit/621b3fd97fd4c88b749ea07bd8973b70c98d0c53))
+* download external patch bundles from main repo instead ([41151af](https://github.com/Valenced/valenced-manager/commit/41151af204abe943d9e9bf341297525d2fb1d3b1))
+
 ## [1.0.2](https://github.com/Valenced/valenced-manager/compare/v1.0.1...v1.0.2) (2026-10-25)
 
 
