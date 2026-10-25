@@ -51,6 +51,7 @@ class PatchStep(
         val module = runner.getCompletedStep<DownloadModStep>().workingCopy
 
         val bundle = bundleManager.load()
+        if (bundle.custom) runner.logger.w("Using custom patch bundle ${bundle.file}, signed by ${bundle.signer}")
 
         val request = PatchRequest(
             apkPath = baseApk.absolutePath,

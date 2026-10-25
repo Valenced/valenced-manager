@@ -41,6 +41,8 @@ class PreferenceManager(context: Context) :
 
     var moduleLocation by filePreference("module_location", DEFAULT_MODULE_LOCATION)
 
+    var patchBundleLocation by stringPreference("patch_bundle_location", "")
+
     var installMethod by enumPreference("install_method", InstallMethod.DEFAULT)
 
     var logsAlternateBackground by booleanPreference("logs_alternate_bg", true)

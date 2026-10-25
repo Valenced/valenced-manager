@@ -65,6 +65,13 @@ class BundleManager(
     }
 
     private suspend fun update(): PatchBundle {
+        val custom = prefs.patchBundleLocation.takeIf { prefs.isDeveloper && it.isNotBlank() }
+        if (custom != null) {
+            val file = File(custom)
+            check(file.isFile) { "No patch bundle at $custom" }
+            return read(file, release = null)
+        }
+
         val release = repo.getLatestRelease(BuildConfig.REPO).dataOrNull
         if (release == null || (release.tagName == prefs.moduleVersion && file.exists())) return cached()
         return runCatching { download(release) }.getOrElse { error ->
@@ -74,7 +81,7 @@ class BundleManager(
     }
 
     private fun cached(): PatchBundle {
-        check(file.exists() && prefs.moduleVersion.isNotEmpty()) { "Couldn't download Valenced's patches" }
+        check(file.exists() && prefs.moduleVersion.isNotEmpty()) { "Couldn't download Valenced patches" }
         return read(file, prefs.moduleVersion)
     }
 
@@ -85,8 +92,8 @@ class BundleManager(
         val download = file.resolveSibling("$BUNDLE_ASSET.download")
         try {
             when (val result = downloadManager.download(url, download) {}) {
-                is DownloadResult.Error -> error("Couldn't download Valenced's patches: ${result.debugReason}")
-                DownloadResult.Cancelled -> error("Downloading Valenced's patches was cancelled")
+                is DownloadResult.Error -> error("Couldn't download Valenced patches: ${result.debugReason}")
+                DownloadResult.Cancelled -> error("Downloading Valenced patches was cancelled")
                 DownloadResult.Success -> {}
             }
             val bundle = read(download, release.tagName)
@@ -100,24 +107,26 @@ class BundleManager(
         }
     }
 
-    private fun read(file: File, release: String): PatchBundle {
+    /** @param release [file]'s release, or null for a custom bundle. */
+    private fun read(file: File, release: String?): PatchBundle {
+        val name = release?.let { "Valenced $it" } ?: file.name
         val inspection = inspect(
             InspectRequest(
                 splitPaths = emptyList(),
                 bundlePaths = listOf(file.absolutePath),
-                trust = Trust(keys = listOf(BuildConfig.BUNDLE_PUBLIC_KEY)),
+                trust = Trust(keys = listOfNotNull(BuildConfig.BUNDLE_PUBLIC_KEY.takeIf { release != null })),
             )
         )
         val metadata = inspection.bundles.single()
         when (val problem = metadata.problem) {
             null -> {}
             is Problem.BundleTooOld ->
-                error("Valenced $release was built for Reseam ${problem.built}, this Manager runs ${problem.running}")
+                error("$name was built for Reseam ${problem.built}, this Manager runs ${problem.running}")
             is Problem.EngineTooOld ->
-                error("Valenced $release needs Reseam ${problem.built}, update Valenced Manager")
-            else -> error("Valenced $release's patches can't be read: $problem")
+                error("$name needs Reseam ${problem.built}, update Valenced Manager")
+            else -> error("$name's patches can't be read: $problem")
         }
-        check(metadata.trusted) { "Valenced $release's patches are signed by an unknown key ${metadata.publicKey}" }
+        check(metadata.trusted || release == null) { "$name's patches are signed by an unknown key ${metadata.publicKey}" }
 
         val versions = inspection.patches
             .flatMap { (it.spec.compatibility as? Compatibility.Packages)?.packages.orEmpty() }
@@ -142,14 +151,17 @@ class BundleManager(
 }
 
 /**
- * @param signer The key the bundle was signed with, the one this app trusts.
- * @param release The Valenced release the bundle is from, whose Xposed module it loads.
+ * @param signer The key the bundle was signed with, unless [custom].
+ * @param release The Valenced release the patch bundle is from to load the Xposed module with. `null` for a custom bundle, which will use the latest release's.
  */
 data class PatchBundle(
     val file: File,
     val signer: String,
-    val release: String,
+    val release: String?,
     val discordVersion: DiscordVersion,
 ) {
-    val moduleUrl get() = "https://github.com/${BuildConfig.REPO}/releases/download/$release/app-release.apk"
+    val custom get() = release == null
+
+    val moduleUrl get() = "https://github.com/${BuildConfig.REPO}/releases/" +
+        (release?.let { "download/$it" } ?: "latest/download") + "/app-release.apk"
 }

@@ -49,6 +49,10 @@ class DeveloperSettings: Screen {
             mutableStateOf(prefs.moduleLocation.absolutePath)
         }
 
+        var patchBundleLocation by remember {
+            mutableStateOf(prefs.patchBundleLocation)
+        }
+
         Scaffold(
             topBar = { TitleBar(scrollBehavior) },
             contentWindowInsets = WindowInsets(0, 0, 0, 0),
@@ -90,6 +94,16 @@ class DeveloperSettings: Screen {
                     label = stringResource(R.string.settings_module_location_reset),
                     onClick = {
                         prefs.moduleLocation = prefs.DEFAULT_MODULE_LOCATION
+                    }
+                )
+
+                SettingsTextField(
+                    label = stringResource(R.string.settings_patch_bundle_location),
+                    supportingText = stringResource(R.string.settings_patch_bundle_location_description),
+                    pref = patchBundleLocation,
+                    onPrefChange = {
+                        patchBundleLocation = it
+                        prefs.patchBundleLocation = it
                     }
                 )
 

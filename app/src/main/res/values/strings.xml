@@ -135,8 +135,10 @@
     <string name="settings_developer">Developer only</string>
     <string name="settings_developer_description">These settings may break things if used improperly</string>
     <string name="settings_module_location">Module location</string>
-    <string name="settings_module_location_description">For use with developing the Xposed module. BE CAREFUL</string>
+    <string name="settings_module_location_description">An Xposed module to patch with instead.</string>
     <string name="settings_module_location_reset">Reset module location</string>
+    <string name="settings_patch_bundle_location">Patch bundle location</string>
+    <string name="settings_patch_bundle_location_description">A .reseam file to patch with instead. Leave empty for the official release.</string>
     <string name="settings_package_name">Package name</string>
     <string name="settings_debuggable">Debuggable</string>
     <string name="settings_debuggable_description">Enable debuggable flag</string>
