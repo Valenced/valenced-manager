@@ -1,3 +1,11 @@
+## [1.1.1](https://github.com/Valenced/valenced-manager/compare/v1.1.0...v1.1.1) (2026-10-27)
+
+
+### Bug Fixes
+
+* keep patching files in internal storage ([0147ee3](https://github.com/Valenced/valenced-manager/commit/0147ee3608074d606b79c965e200072f4463494c))
+* set TMPDIR so patching works below Android 13 ([bbccd28](https://github.com/Valenced/valenced-manager/commit/bbccd28d313c2db62d7faf4dfc387448077c5607))
+
 # [1.1.0](https://github.com/Valenced/valenced-manager/compare/v1.0.2...v1.1.0) (2026-10-25)
 
 
