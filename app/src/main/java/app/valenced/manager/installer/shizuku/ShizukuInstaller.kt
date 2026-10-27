@@ -25,32 +25,26 @@ class ShizukuInstaller(private val context: Context) : Installer, KoinComponent 
             throw Error("Failed to install due to missing Shizuku permissions")
         }
 
-        val tempDir = File("/data/local/tmp")
-        val movedApks = mutableListOf<File>()
+        // The shell user can't read the app's internal storage, so the splits are streamed to pm
+        val createResult = executeShellCommand("pm install-create -S ${apks.sumOf { it.length() }}")
+        val sessionId = Regex("""\[(\d+)]""").find(createResult)?.groupValues?.get(1)
+            ?: throw RuntimeException("Failed to create install session: $createResult")
 
-        // Copy each split to tmp
         apks.forEach {
-            val moveCommand = "cp ${it.absolutePath} ${tempDir.absolutePath}"
-            val moveResult = executeShellCommand(moveCommand)
-
-            if(moveResult.isBlank())
-                movedApks.add(File(tempDir.absolutePath, it.name))
-            else
-                throw RuntimeException("Failed to move ${it.absolutePath} to temp dir")
+            executeShellCommand("pm install-write -S ${it.length()} $sessionId ${it.name} -", input = it)
         }
 
-        val installCommand = "pm install ${movedApks.joinToString(" ") { it.absolutePath }}"
-        executeShellCommand(installCommand)
+        val commitResult = executeShellCommand("pm install-commit $sessionId")
+        if (!commitResult.startsWith("Success")) throw RuntimeException("Failed to install: $commitResult")
 
         installManager.getInstalled()
-        movedApks.forEach {
-            it.delete()
-        }
     }
 
-    private fun executeShellCommand(command: String): String {
+    private fun executeShellCommand(command: String, input: File? = null): String {
         @Suppress("DEPRECATION")
         val process = Shizuku.newProcess(arrayOf("sh", "-c", command), null, null)
+
+        process.outputStream.use { stdin -> input?.inputStream()?.use { it.copyTo(stdin) } }
 
         val errorStr = process.errorStream.bufferedReader().use { it.readText().trim() }
         if(errorStr.isNotBlank()) throw RuntimeException("Failed to execute $command:\n\n$errorStr")

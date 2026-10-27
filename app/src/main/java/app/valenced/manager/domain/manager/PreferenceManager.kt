@@ -1,20 +1,14 @@
 package app.valenced.manager.domain.manager
 
 import android.content.Context
-import android.os.Environment
 import androidx.annotation.StringRes
 import app.valenced.manager.BuildConfig
 import app.valenced.manager.R
 import app.valenced.manager.domain.manager.base.BasePreferenceManager
-import java.io.File
 import java.util.concurrent.TimeUnit
 
-class PreferenceManager(context: Context) :
+class PreferenceManager(context: Context, paths: PathManager) :
     BasePreferenceManager(context.getSharedPreferences("prefs", Context.MODE_PRIVATE)) {
-
-    val DEFAULT_MODULE_LOCATION =
-        (context.externalCacheDir ?: File(Environment.getExternalStorageDirectory(), Environment.DIRECTORY_DOWNLOADS).resolve(
-            BuildConfig.MANAGER_NAME).also { it.mkdirs() }).resolve("xposed.apk")
 
     var packageName by stringPreference("package_name", BuildConfig.MODDED_APP_PACKAGE_NAME)
 
@@ -38,7 +32,7 @@ class PreferenceManager(context: Context) :
 
     var updateDuration by enumPreference("update_duration", UpdateCheckerDuration.HOURLY)
 
-    var moduleLocation by filePreference("module_location", DEFAULT_MODULE_LOCATION)
+    var moduleLocation by filePreference("module_location", paths.moduleApk)
 
     var patchBundleLocation by stringPreference("patch_bundle_location", "")
 

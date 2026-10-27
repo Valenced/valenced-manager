@@ -3,7 +3,6 @@ package app.valenced.manager.ui.viewmodel.home
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Environment
 import android.provider.Settings
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -19,6 +18,7 @@ import app.valenced.manager.domain.manager.DownloadManager
 import app.valenced.manager.domain.manager.DownloadResult
 import app.valenced.manager.domain.manager.InstallManager
 import app.valenced.manager.domain.manager.InstallMethod
+import app.valenced.manager.domain.manager.PathManager
 import app.valenced.manager.domain.manager.PreferenceManager
 import app.valenced.manager.domain.repository.RestRepository
 import app.valenced.manager.installer.Installer
@@ -34,7 +34,6 @@ import app.valenced.manager.utils.showToast
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.coroutines.launch
-import java.io.File
 
 class HomeViewModel(
     private val repo: RestRepository,
@@ -42,13 +41,9 @@ class HomeViewModel(
     val prefs: PreferenceManager,
     val installManager: InstallManager,
     val bundleManager: BundleManager,
-    private val downloadManager: DownloadManager
+    private val downloadManager: DownloadManager,
+    private val paths: PathManager
 ) : ScreenModel {
-
-    private val cacheDir = context.externalCacheDir ?: File(
-        Environment.getExternalStorageDirectory(),
-        Environment.DIRECTORY_DOWNLOADS
-    ).resolve(BuildConfig.MANAGER_NAME).also { it.mkdirs() }
 
     var release by mutableStateOf<Release?>(null)
         private set
@@ -96,12 +91,7 @@ class HomeViewModel(
             DiscordVersion.fromVersionCode(installManager.current?.versionCode.toString()) ?: return
         val targetVersion = bundleManager.discordVersion ?: return
 
-        if (targetVersion > currentVersion) {
-            for (file in (context.externalCacheDir ?: context.cacheDir).listFiles()
-                ?: emptyArray()) {
-                if (file.isDirectory) file.deleteRecursively()
-            }
-        }
+        if (targetVersion > currentVersion) paths.discordDownloadsDir.deleteRecursively()
     }
 
     private fun checkForUpdate() {
@@ -116,7 +106,7 @@ class HomeViewModel(
 
     fun downloadAndInstallUpdate(onProgressUpdate: (Float?) -> Unit) {
         screenModelScope.launch {
-            val update = File(cacheDir, "update.apk")
+            val update = paths.updateApk
             if (update.exists()) update.delete()
             isUpdating = true
             val downloadResult =

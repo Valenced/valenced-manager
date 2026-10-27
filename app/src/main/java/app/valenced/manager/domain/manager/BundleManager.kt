@@ -34,6 +34,7 @@ class BundleManager(
     private val repo: RestRepository,
     private val downloadManager: DownloadManager,
     private val prefs: PreferenceManager,
+    private val paths: PathManager,
 ) {
 
     private val mutex = Mutex()
@@ -99,7 +100,7 @@ class BundleManager(
             val bundle = read(download, release.tagName)
             download.copyTo(file, overwrite = true)
             // The downloaded module is the previous release's. One the user picked is theirs to keep.
-            prefs.DEFAULT_MODULE_LOCATION.delete()
+            paths.moduleApk.delete()
             prefs.moduleVersion = release.tagName
             return bundle.copy(file = file)
         } finally {

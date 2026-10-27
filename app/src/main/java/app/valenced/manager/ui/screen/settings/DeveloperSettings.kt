@@ -28,6 +28,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import app.valenced.manager.R
 import app.valenced.manager.domain.manager.InstallManager
+import app.valenced.manager.domain.manager.PathManager
 import app.valenced.manager.domain.manager.PreferenceManager
 import app.valenced.manager.ui.components.settings.SettingsButton
 import app.valenced.manager.ui.components.settings.SettingsSwitch
@@ -43,6 +44,7 @@ class DeveloperSettings: Screen {
     override fun Content() {
         val prefs: PreferenceManager = get()
         val installManager: InstallManager = get()
+        val paths: PathManager = get()
         val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
         var moduleLocation by remember {
@@ -93,7 +95,7 @@ class DeveloperSettings: Screen {
                 SettingsButton(
                     label = stringResource(R.string.settings_module_location_reset),
                     onClick = {
-                        prefs.moduleLocation = prefs.DEFAULT_MODULE_LOCATION
+                        prefs.moduleLocation = paths.moduleApk
                     }
                 )
 

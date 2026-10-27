@@ -1,13 +1,12 @@
 package app.valenced.manager.installer.step
 
-import android.content.Context
 import android.os.Build
-import android.os.Environment
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import app.valenced.manager.BuildConfig
+import app.valenced.manager.domain.manager.PathManager
 import app.valenced.manager.domain.manager.PreferenceManager
 import app.valenced.manager.installer.step.download.DownloadBaseStep
 import app.valenced.manager.installer.step.download.DownloadLangStep
@@ -24,7 +23,6 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.io.File
 
 /**
  * Runs all installation steps in order
@@ -39,7 +37,7 @@ class StepRunner(
 ): KoinComponent {
 
     private val preferenceManager: PreferenceManager by inject()
-    private val context: Context by inject()
+    private val paths: PathManager by inject()
     private val debugInfo = """
             ${BuildConfig.MOD_NAME} Manager v${BuildConfig.VERSION_NAME}
             Built from commit ${BuildConfig.GIT_COMMIT} on ${BuildConfig.GIT_BRANCH} ${if (BuildConfig.GIT_LOCAL_CHANGES || BuildConfig.GIT_LOCAL_COMMITS) "(Changes Present)" else ""}
@@ -62,29 +60,11 @@ class StepRunner(
         }
     }
 
-    /**
-     * Root directory for all downloaded files
-     */
-    private val cacheDir =
-        context.externalCacheDir
-        ?: File(Environment.getExternalStorageDirectory(), Environment.DIRECTORY_DOWNLOADS)
-            .resolve(BuildConfig.MANAGER_NAME)
-            .also { it.mkdirs() }
+    private val discordDir = paths.discordDownloads(discordVersion.toVersionCode())
 
-    /**
-     * Where version specific downloads are persisted
-     */
-    private val discordCacheDir = cacheDir.resolve(discordVersion.toVersionCode())
+    private val patchedDir = paths.patchedDir.also { it.deleteRecursively() }
 
-    /**
-     * Working directory with copies of the downloads that get patched
-     */
-    private val patchedDir = discordCacheDir.resolve("patched").also { it.deleteRecursively() }
-
-    /**
-     * Where the patched and signed apks are written
-     */
-    private val signedDir = discordCacheDir.resolve("signed").also { it.deleteRecursively() }
+    private val signedDir = paths.signedDir.also { it.deleteRecursively() }
 
     var currentStep by mutableStateOf<Step?>(null)
         private set
@@ -108,10 +88,10 @@ class StepRunner(
      */
     val steps: ImmutableList<Step> = buildList {
         // Downloading
-        add(DownloadBaseStep(discordCacheDir, patchedDir, discordVersion.toVersionCode()))
-        add(DownloadLibsStep(discordCacheDir, patchedDir, discordVersion.toVersionCode()))
-        add(DownloadLangStep(discordCacheDir, patchedDir, discordVersion.toVersionCode()))
-        add(DownloadResourcesStep(discordCacheDir, patchedDir, discordVersion.toVersionCode()))
+        add(DownloadBaseStep(discordDir, patchedDir, discordVersion.toVersionCode()))
+        add(DownloadLibsStep(discordDir, patchedDir, discordVersion.toVersionCode()))
+        add(DownloadLangStep(discordDir, patchedDir, discordVersion.toVersionCode()))
+        add(DownloadResourcesStep(discordDir, patchedDir, discordVersion.toVersionCode()))
         add(DownloadModStep(patchedDir))
 
         // Patching
@@ -136,13 +116,6 @@ class StepRunner(
         }
 
         return step
-    }
-
-    /**
-     * Clears all cached files
-     */
-    fun clearCache() {
-        cacheDir.deleteRecursively()
     }
 
     /**

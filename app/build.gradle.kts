@@ -26,7 +26,6 @@ android {
         versionCode = versionName!!.removePrefix("v").split("-").first().replace(".", "").toInt()
 
         buildConfigField("String", "MOD_NAME", "\"Valenced\"")
-        buildConfigField("String", "MANAGER_NAME", "\"ValencedManager\"")
         buildConfigField("String", "REPO", "\"Valenced/valenced\"")
         buildConfigField("String", "BUNDLE_PUBLIC_KEY", "\"$patchesPublicKey\"")
         buildConfigField("String", "ORG_LINK", "\"https://github.com/Valenced\"")

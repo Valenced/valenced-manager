@@ -12,6 +12,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import app.valenced.manager.R
 import app.valenced.manager.domain.manager.InstallManager
+import app.valenced.manager.domain.manager.PathManager
 import app.valenced.manager.installer.step.Step
 import app.valenced.manager.installer.step.StepGroup
 import app.valenced.manager.installer.step.StepRunner
@@ -29,6 +30,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 class InstallerViewModel(
     private val context: Context,
     private val installManager: InstallManager,
+    private val paths: PathManager,
     discordVersion: DiscordVersion
 ) : ScreenModel {
 
@@ -72,7 +74,7 @@ class InstallerViewModel(
     }
 
     fun clearCache() {
-        runner.clearCache()
+        paths.clearCache()
         context.showToast(R.string.msg_cleared_cache)
     }
 

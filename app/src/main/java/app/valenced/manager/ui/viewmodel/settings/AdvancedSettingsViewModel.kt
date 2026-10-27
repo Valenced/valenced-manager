@@ -1,32 +1,29 @@
 package app.valenced.manager.ui.viewmodel.settings
 
 import android.content.Context
-import android.os.Environment
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import app.valenced.manager.BuildConfig
 import app.valenced.manager.R
 import app.valenced.manager.domain.manager.InstallMethod
+import app.valenced.manager.domain.manager.PathManager
 import app.valenced.manager.domain.manager.PreferenceManager
 import app.valenced.manager.domain.manager.UpdateCheckerDuration
 import app.valenced.manager.installer.shizuku.ShizukuPermissions
 import app.valenced.manager.updatechecker.worker.UpdateWorker
 import app.valenced.manager.utils.showToast
 import kotlinx.coroutines.launch
-import java.io.File
 
 class AdvancedSettingsViewModel(
     private val context: Context,
     private val prefs: PreferenceManager,
+    private val paths: PathManager,
 ) : ScreenModel {
-    private val cacheDir = context.externalCacheDir ?: File(Environment.getExternalStorageDirectory(), Environment.DIRECTORY_DOWNLOADS).resolve(
-        BuildConfig.MANAGER_NAME).also { it.mkdirs() }
 
     fun clearCache() {
-        cacheDir.deleteRecursively()
+        paths.clearCache()
         context.showToast(R.string.msg_cleared_cache)
     }
 
