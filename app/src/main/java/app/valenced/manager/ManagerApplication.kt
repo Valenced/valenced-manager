@@ -4,6 +4,7 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.system.Os
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
@@ -23,6 +24,8 @@ class ManagerApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        // Android sets TMPDIR for apps only from 13 on. Without it the Reseam SDK's temp files fall back to /data/local/tmp, which apps can't write to
+        Os.setenv("TMPDIR", cacheDir.absolutePath, false)
         ReseamAndroidHost.setClassLoader(classLoader)
         initNotificationChannels()
 
