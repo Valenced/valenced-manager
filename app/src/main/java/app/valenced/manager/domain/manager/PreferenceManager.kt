@@ -2,6 +2,8 @@ package app.valenced.manager.domain.manager
 
 import android.content.Context
 import androidx.annotation.StringRes
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import app.valenced.manager.BuildConfig
 import app.valenced.manager.R
 import app.valenced.manager.domain.manager.base.BasePreferenceManager
@@ -16,7 +18,13 @@ class PreferenceManager(context: Context, paths: PathManager) :
 
     var moduleVersion by stringPreference("module_version", "")
 
-    var patchIcon by booleanPreference("patch_icon", true)
+    // Replaces the patch_icon switch, which picked Valenced's icon or Discord's
+    var launcherIcon by enumPreference(
+        "launcher_icon",
+        if (getBoolean("patch_icon", true)) LauncherIcon.VALENCED else LauncherIcon.DISCORD
+    )
+
+    var launcherIconColor by colorPreference("launcher_icon_color", Color(BuildConfig.MODDED_APP_ICON))
 
     var debuggable by booleanPreference("debuggable", false)
 
@@ -68,6 +76,18 @@ enum class UpdateCheckerDuration(@StringRes val labelRes: Int, val time: Long, v
     TWICE_DAILY(R.string.duration_twice_daily, 12, TimeUnit.HOURS),
     DAILY(R.string.duration_daily, 1, TimeUnit.DAYS),
     WEEKLY(R.string.duration_weekly, 7, TimeUnit.DAYS)
+}
+
+enum class LauncherIcon(@StringRes val labelRes: Int) {
+    DISCORD(R.string.launcher_icon_discord),
+    VALENCED(R.string.launcher_icon_valenced),
+    COLOR(R.string.launcher_icon_color),
+    CUSTOM(R.string.launcher_icon_custom);
+
+    companion object {
+        /** Discord's logo on a [COLOR] background, whichever of black or white shows on it */
+        fun logoColor(background: Color) = if (background.luminance() > 0.5f) Color.Black else Color.White
+    }
 }
 
 enum class Mirror(val baseUrl: String) {

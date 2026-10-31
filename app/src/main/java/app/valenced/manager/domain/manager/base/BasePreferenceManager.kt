@@ -15,7 +15,7 @@ abstract class BasePreferenceManager(
     protected fun getString(key: String, defaultValue: String?) =
         prefs.getString(key, defaultValue)!!
 
-    private fun getBoolean(key: String, defaultValue: Boolean) = prefs.getBoolean(key, defaultValue)
+    protected fun getBoolean(key: String, defaultValue: Boolean) = prefs.getBoolean(key, defaultValue)
     private fun getInt(key: String, defaultValue: Int) = prefs.getInt(key, defaultValue)
     private fun getFloat(key: String, defaultValue: Float) = prefs.getFloat(key, defaultValue)
     private fun getColor(key: String, defaultValue: Color): Color {
