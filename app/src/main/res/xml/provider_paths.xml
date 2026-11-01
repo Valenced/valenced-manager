@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <files-path name="temp_logs" path="logsTmp/"/>
+  <cache-path
+      name="cache"
+      path="." />
+  <files-path
+      name="files"
+      path="." />
 </paths>

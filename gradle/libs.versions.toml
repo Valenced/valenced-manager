@@ -1,101 +1,156 @@
 [versions]
-# Plugins
-agp = "9.4.1"
-kotlin = "2.4.20"
-
-# AndroidX
-androidx-core-ktx = "1.13.1"
-androidx-core-splashscreen = "1.0.1"
-androidx-lifecycle-runtime = "2.8.6"
-androidx-paging-compose = "3.3.2"
-androidx-work-runtime = "2.12.0"
-
-# Compose
-compose-activity = "1.9.2"
-compose-bom = "2024.09.03"
-
-# Misc.
-aboutlibraries = "11.1.3"
-accompanist = "0.34.0"
-coil = "2.6.0"
-koin = "3.5.6"
-# Reseam engine version, keep in sync with main repo's android/patches/settings.gradle.kts.
-reseam = "0.30.1"
-kotlinx-datetime = "0.5.0"
-kotlinx-collections = "0.3.7"
-ktor = "2.3.12"
-shizuku = "13.1.0"
-voyager = "1.1.0-alpha04"
+shizuku = "13.1.5"
+accompanist = "0.37.3"
+agp = "8.11.0"
+androidx-activity = "1.10.1"
+androidx-core = "1.16.0"
+androidx-splashscreen = "1.0.1"
+androidx-lifecycle = "2.9.1"
+apksig = "8.11.0"
+axml = "1.0.1"
+binary-resources = "2.0.1"
+bouncycastle = "1.81"
+coil = "3.2.0"
+compose = "1.8.3"
+compose-material3 = "1.3.2"
+compose-pipette = "1.0.1"
+desugaring = "2.1.5"
+diff = "4.16"
+hiddenApi-bypass = "6.1"
+hiddenApi-refine = "4.4.0"
+hiddenApi-stub = "4.4.0"
+koin = "4.1.0"
+kotlin = "2.2.0"
+kotlinx-immutable = "0.4.0"
+kotlinx-serialization = "1.9.0"
+ktor = "3.2.1"
+microg = "0.3.6.244735"
+shimmer = "1.3.3"
+smali = "3.0.9"
+voyager = "1.1.0-beta03"
+zip = "2.3.0"
 
 [libraries]
+# Shizuku + Utils
+shizuku-api = { module = "dev.rikka.shizuku:api", version.ref = "shizuku" }
+shizuku-provider = { module = "dev.rikka.shizuku:provider", version.ref = "shizuku" }
+hiddenApi-bypass = { module = "org.lsposed.hiddenapibypass:hiddenapibypass", version.ref = "hiddenApi-bypass" }
+hiddenApi-refine = { module = "dev.rikka.tools.refine:runtime", version.ref = "hiddenApi-refine" }
+hiddenApi-stub = { module = "dev.rikka.hidden:stub", version.ref = "hiddenApi-stub" }
 
 # Accompanist
-accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanist" }
-accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
-accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
+accompanist-systemUiController = { module = "com.google.accompanist:accompanist-systemuicontroller", version = "0.36.0" }
 
 # AndroidX
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
-androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidx-core-splashscreen" }
-androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-runtime" }
-androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "androidx-paging-compose" }
-androidx-work-runtime = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "androidx-work-runtime" }
+androidx-activity = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
+androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", version.ref = "androidx-lifecycle" }
+androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
+androidx-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-splashscreen" }
 
-# Coil
-coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
-coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+# Coil (image library)
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 
 # Compose
-compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
-compose-ui = { group = "androidx.compose.ui", name = "ui" }
-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose" }
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
+compose-animations = { module = "androidx.compose.animation:animation-graphics", version.ref = "compose" }
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
+
+# Compose debug tooling
+compose-runtime-tracing = { module = "androidx.compose.runtime:runtime-tracing", version.ref = "compose" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+
+# Extra compose libs
+compose-pipette = { module = "dev.zt64.compose.pipette:compose-pipette", version.ref = "compose-pipette" }
+compose-shimmer = { module = "com.valentinilk.shimmer:compose-shimmer", version.ref = "shimmer" }
 
 # Koin
-koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
-koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
-koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+
+# KotlinX
+kotlinx-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-immutable" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 
 # Ktor
-ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
-ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
-ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
-ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
-ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
-
-# Shizuku
-shizuku-api = { group = "dev.rikka.shizuku", name = "api", version.ref = "shizuku" }
-shizuku-provider = { group = "dev.rikka.shizuku", name = "provider", version.ref = "shizuku" }
+ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
 # Voyager
-voyager-navigator = { group = "cafe.adriel.voyager", name = "voyager-navigator", version.ref = "voyager" }
-voyager-screenmodel = { group = "cafe.adriel.voyager", name = "voyager-screenmodel", version.ref = "voyager" }
-voyager-tab-navigator = { group = "cafe.adriel.voyager", name = "voyager-tab-navigator", version.ref = "voyager" }
-voyager-transitions = { group = "cafe.adriel.voyager", name = "voyager-transitions", version.ref = "voyager" }
-voyager-koin = { group = "cafe.adriel.voyager", name = "voyager-koin", version.ref = "voyager" }
+voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
+voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
+voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
 
-# Misc.
-aboutlibraries-core = { group = "com.mikepenz", name = "aboutlibraries", version.ref = "aboutlibraries" }
-kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
-kotlinx-collections = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinx-collections" }
-reseam-sdk = { group = "app.reseam", name = "reseam-sdk", version.ref = "reseam" }
+# Patching
+apksig = { module = "com.android.tools.build:apksig", version.ref = "apksig" }
+axml = { module = "com.aliucord:axml", version.ref = "axml" }
+binaryResources = { module = "com.aliucord:binary-resources", version.ref = "binary-resources" }
+bouncycastle = { module = "org.bouncycastle:bcpkix-jdk18on", version.ref = "bouncycastle" }
+diff = { module = "io.github.java-diff-utils:java-diff-utils", version.ref = "diff" }
+smali = { module = "com.android.tools.smali:smali", version.ref = "smali" }
+baksmali = { module = "com.android.tools.smali:smali-baksmali", version.ref = "smali" }
+zip = { module = "io.github.diamondminer88:zip-android", version.ref = "zip" }
+
+# Other
+microg = { module = "org.microg.gms:play-services-safetynet", version.ref = "microg" }
+desugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugaring" }
 
 [bundles]
-accompanist = ["accompanist-pager", "accompanist-permissions", "accompanist-systemuicontroller"]
-androidx = ["androidx-work-runtime", "androidx-paging-compose", "androidx-lifecycle-runtime", "androidx-core-splashscreen", "androidx-core-ktx"]
-coil = ["coil", "coil-compose"]
-compose = ["compose-activity", "compose-material-icons-extended", "compose-material3", "compose-ui", "compose-ui-graphics", "compose-ui-tooling-preview"]
-koin = ["koin-android", "koin-androidx-compose", "koin-core"]
-ktor = ["ktor-client-okhttp", "ktor-client-content-negotiation", "ktor-client-core", "ktor-client-logging", "ktor-serialization-kotlinx-json"]
-shizuku = ["shizuku-api", "shizuku-provider"]
-voyager = ["voyager-koin", "voyager-navigator", "voyager-tab-navigator", "voyager-transitions", "voyager-screenmodel"]
+accompanist = [
+    "accompanist-permissions",
+    "accompanist-systemUiController",
+]
+androidx = [
+    "androidx-core",
+    "androidx-activity",
+    "androidx-lifecycle",
+    "androidx-lifecycle-process",
+    "androidx-splashscreen",
+]
+coil = [
+    "coil-compose",
+    "coil-okhttp",
+]
+compose = [
+    "compose-runtime",
+    "compose-ui",
+    "compose-foundation",
+    "compose-material3",
+    "compose-animations",
+]
+koin = [
+    "koin-android",
+    "koin-compose",
+]
+ktor = [
+    "ktor-core",
+    "ktor-okhttp",
+    "ktor-logging",
+    "ktor-content-negotiation",
+    "ktor-serialization-json",
+]
+voyager = [
+    "voyager-koin",
+    "voyager-navigator",
+    "voyager-transitions",
+]
+shizuku = [
+    "shizuku-api",
+    "shizuku-provider",
+]
 
 [plugins]
-aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutlibraries"}
 android-application = { id = "com.android.application", version.ref = "agp" }
-android-library = { id = "com.android.library", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+hiddenApi-refine = { id = "dev.rikka.tools.refine", version = "4.3.0" }

@@ -1,171 +1,301 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name" translatable="false">Valenced Manager</string>
+  <string name="app_name">Valenced Manager</string>
+  <string name="app_description">Modern Discord client modification manager for Valenced.</string>
 
-    <string name="cd_library_author">Author: %1$s</string>
-    <string name="cd_library_license">License: %1$s</string>
+  <string name="aliucord" translatable="false">Valenced</string>
+  <string name="discord" translatable="false">Discord</string>
+  <string name="github" translatable="false">GitHub</string>
+  <string name="support_server">Support Server</string>
+  <string name="installer">Installer</string>
 
-    <string name="msg_cleared_cache">Cache cleared successfully</string>
-    <string name="msg_load_fail">Failed to load commits</string>
-    <string name="msg_coming_soon">Coming soon</string>
-    <string name="msg_seven_left">7 more taps</string>
-    <string name="msg_five_left">5 more taps</string>
-    <string name="msg_two_left">2 more taps</string>
-    <string name="msg_loading">Loading…</string>
-    <string name="msg_patches_unavailable">Patches unavailable</string>
-    <string name="msg_downgrade">Downgrade</string>
-    <string name="msg_downgrade_disallowed">Cannot downgrade, try uninstalling first</string>
-    <string name="msg_unlocked">You are now a developer</string>
-    <string name="msg_permission_grant">File permissions are required to use shared storage.</string>
-    <string name="msg_shizuku_denied">Failed to obtain Shizuku permissions</string>
-    <string name="msg_try_again">Would you like to try again?</string>
-    <string name="msg_invalid_apk">APK was corrupted, try clearing cache then reinstalling</string>
-    <string name="msg_download_cancelled">Download was aborted</string>
-    <string name="msg_download_failed">Download failed</string>
-    <string name="msg_download_verify_failed">Could not verify downloaded file, check logs for more details</string>
-    <string name="msg_copied">Copied to clipboard</string>
+  <string name="shiggy" translatable="false">Valenced</string>
+  <string name="aliucord_description">A modern mod for the Discord Android App</string>
 
-    <string name="group_download">Download APKs</string>
-    <string name="group_patch">Patching</string>
-    <string name="group_installing">Installing</string>
+  <string name="action_cancel">Cancel</string>
+  <string name="action_retry">Retry</string>
+  <string name="action_continue">Continue</string>
+  <string name="action_retry_install">Retry installation</string>
+  <string name="action_open_error_log">Open error log</string>
+  <string name="action_apply">Apply</string>
+  <string name="action_confirm">Confirm</string>
+  <string name="action_dismiss">Dismiss</string>
+  <string name="action_install">Install</string>
+  <string name="action_uninstall">Uninstall</string>
+  <string name="action_add_install">New Install</string>
+  <string name="action_update_install">Update Install</string>
+  <string name="action_update">Update</string>
+  <string name="action_clear">Clear</string>
+  <string name="action_launch">Launch</string>
+  <string name="action_close">Close</string>
+  <string name="action_open_settings">Open settings</string>
+  <string name="action_search">Search</string>
+  <string name="action_copy">Copy</string>
+  <string name="action_collapse">Collapse</string>
+  <string name="action_expand">Expand</string>
+  <string name="action_copied">Copied!</string>
+  <string name="action_cleared_cache">Cleared cache!</string>
+  <string name="action_exit_anyways">Exit Anyways</string>
+  <string name="action_open_info">Open Info</string>
+  <string name="action_reset_default">Reset to default</string>
+  <string name="action_reinstall">Reinstall</string>
 
-    <string name="step_dl_base">Downloading base apk</string>
-    <string name="step_dl_lib">Downloading libraries apk</string>
-    <string name="step_dl_lang">Downloading language apk</string>
-    <string name="step_dl_res">Downloading resources apk</string>
-    <string name="step_dl_mod">Downloading Valenced</string>
+  <string name="permissions_grant_title">Grant Permissions</string>
+  <string name="storage_permissions_grant_body">In order for Valenced Manager to function, file permissions are required.</string>
+  <string name="install_permissions_grant_body">Installing Valenced requires granting permissions to install apps from unknown sources.</string>
 
-    <string name="step_patch">Patching Discord</string>
-    <string name="step_installing">Installing APKs</string>
+  <string name="installs_no_installs">No installations found!</string>
+  <string name="launch_aliucord_fail">Failed to launch Valenced</string>
 
-    <string name="installer_success">Installed successfully</string>
-    <string name="installer_aborted">Install canceled</string>
+  <string name="settings_header_advanced">Advanced</string>
+  <string name="settings_header_appearance">Appearance</string>
+  <string name="settings_header_info">Info</string>
+  <string name="setting_theme">Theme</string>
+  <string name="setting_theme_desc">The theme to apply to this app</string>
+  <string name="setting_amoled">Amoled mode</string>
+  <string name="setting_amoled_desc">Force true-black backgrounds for AMOLED displays</string>
+  <string name="setting_dynamic_color">Dynamic color</string>
+  <string
+    name="setting_dynamic_color_desc"
+  >Enables Material You theming on Android 12+; dynamic colors will also be applied to the Amoled theme when enabled</string>
+  <string name="setting_installer">Installer</string>
+  <string name="setting_installer_desc">The method to use for installing Valenced</string>
+  <string name="setting_developer_options">Developer options</string>
+  <string name="setting_developer_options_desc">Don\'t enable this unless you know what it does! (yes, really)</string>
+  <string name="setting_keep_patched_apks">Keep patched APKs</string>
+  <string
+    name="setting_keep_patched_apks_desc"
+  >Keep all patched files and APKs after installation for debugging purposes. Note that exporting the APK is only useful after a successful patching session.</string>
+  <string name="settings_clear_cache">Clear cache</string>
+  <string name="settings_export_apk">Export APK</string>
+  <string name="settings_export_apk_not_implemented">This feature is not implemented yet</string>
 
-    <string name="install_fail_generic">Failed to install: Unknown reason</string>
-    <string name="install_fail_blocked">Installation was blocked</string>
-    <string name="install_fail_invalid">One or more APKs were invalid or corrupt</string>
-    <string name="install_fail_conflict">Conflicts with an existing app, usually due to mismatched signatures</string>
-    <string name="install_fail_storage">Not enough available storage to install</string>
-    <string name="install_fail_incompatible">Application is incompatible with this device</string>
-    <string name="install_fail_timeout">Installation timed out</string>
+  <string
+    name="about_manager_credit_disclaimer_notice"
+  >Valenced Manager: Modern, high-performance client modification manager built for Valenced on Android.</string>
 
-    <string name="status_ongoing">Ongoing</string>
-    <string name="status_successful">Successful</string>
-    <string name="status_fail">Failed</string>
-    <string name="status_queued">Queued</string>
+  <string name="theme_system">System</string>
+  <string name="theme_dark">Dark</string>
+  <string name="theme_light">Light</string>
+  <string name="theme_amoled">Amoled</string>
 
-    <string name="action_collapse">Collapse</string>
-    <string name="action_expand">Expand</string>
-    <string name="action_back">Go back</string>
-    <string name="action_copy_logs">Copy logs</string>
-    <string name="action_clear_cache">Clear cache</string>
-    <string name="action_confirm">Confirm</string>
-    <string name="action_start_update">Start update</string>
-    <string name="action_install">Install</string>
-    <string name="action_update">Update</string>
-    <string name="action_reinstall">Reinstall</string>
-    <string name="action_launch">Launch</string>
-    <string name="action_uninstall">Uninstall</string>
-    <string name="action_info">Info</string>
-    <string name="action_retry">Retry</string>
-    <string name="action_open_about">Open about</string>
-    <string name="action_open_settings">Open settings</string>
-    <string name="action_tap_to_install">Tap to install Valenced for Discord %1$s</string>
-    <string name="action_confirm_exit">Exit anyways</string>
-    <string name="action_dismiss_nevermind">Nevermind</string>
-    <string name="action_dismiss_no_thanks">No thanks</string>
-    <string name="action_try_again">Try again</string>
-    <string name="action_previous_theme">See previous theme</string>
-    <string name="action_next_theme">See next theme</string>
-    <string name="action_view_logs">View logs</string>
-    <string name="action_show_timestamp">Show timestamp</string>
-    <string name="action_copy_log">Copy log</string>
-    <string name="action_save_logs">Save logs to file</string>
-    <string name="action_share_logs">Share logs</string>
-    <string name="action_more_options">More options</string>
+  <string name="navigation_back">Back</string>
+  <string name="navigation_about">About</string>
+  <string name="navigation_about_manager">About Manager</string>
+  <string name="navigation_logs">Open logs</string>
+  <string name="navigation_settings">Settings</string>
 
-    <string name="msg_back_warning">Exiting the installer before its finished could corrupt downloaded files, are you sure you want to do that?</string>
+  <string name="contributors_contributions">%d contributions</string>
+  <string name="contributors">Contributors</string>
+  <string name="lead_role_kettu">Kettu - Creator</string>
+  <string name="lead_role_shiggycord">Valenced - Creator</string>
+  <string name="lead_role_bunny">Bunny - Creator</string>
+  <string name="role_creator_vendetta">Vendetta - Creator</string>
+  <string name="role_original_manager_creator">Original Manager Creator</string>
 
-    <string name="installer_cached">Cached</string>
+  <string name="network_load_fail">Failed to load</string>
+  <string name="network_warning_title">Metered network</string>
+  <string
+    name="network_warning_body"
+  >It appears you are connected to mobile data or a potentially metered network. Continuing with the installation may result in several hundred megabytes being downloaded. Are you sure you want to continue?</string>
+  <string name="network_warning_disable">Don\'t show this again</string>
 
-    <string name="title_installer">Installer</string>
-    <string name="title_home">Home</string>
-    <string name="title_settings">Settings</string>
-    <string name="title_update">Update available!</string>
-    <string name="title_about">About</string>
-    <string name="title_permission_grant">Grant permissions</string>
-    <string name="title_update_available">New Discord update available!</string>
-    <string name="title_warning">Warning</string>
-    <string name="title_dl_failed">Download failed</string>
-    <string name="title_logs">Logs</string>
-    <string name="title_os_libraries">Open source libraries</string>
-    <string name="title_libraries">Libraries</string>
+  <string name="version_supported">Supported version:</string>
+  <string name="version_none">None</string>
+  <string name="version_stable">Stable</string>
+  <string name="version_beta">Beta</string>
+  <string name="version_alpha">Alpha</string>
+  <string name="version_unknown">Unknown</string>
+  <string name="version_load_fail">Failed to retrieve version</string>
+  <string name="version_invalid_code">Invalid version code format</string>
 
-    <string name="theme_system">System</string>
-    <string name="theme_light">Light</string>
-    <string name="theme_dark">Dark</string>
+  <string name="installer_file_save_success">Saved to %s</string>
+  <string name="installer_file_save_failed">Failed to save %s</string>
+  <string name="installer_install_success">Successfully installed Valenced</string>
+  <string name="installer_install_aborted">Cancelled Valenced installation</string>
+  <string name="installer_uninstall_new">Please uninstall your current version of Valenced in order to continue!</string>
+  <string name="installer_uninstall_success">Successfully uninstalled Valenced</string>
+  <string name="installer_uninstall_aborted">Cancelled uninstallation</string>
+  <string name="installer_dl_verify_fail">Failed to verify download</string>
+  <string name="installer_insufficient_storage">Insufficient storage space!</string>
+  <string
+    name="installer_banner_minimization"
+  >Since battery optimizations have not been disabled, minimizing this screen may abort the installation process!</string>
+  <string name="installer_banner_failure">Installation failed! You can retry or open the error log for details.</string>
+  <string
+    name="installer_banner_success"
+  >Successfully installed Valenced! Do *NOT* uninstall the manager (this app) as it is required to perform certain types of updates.</string>
 
-    <string name="duration_disabled">Disabled</string>
-    <string name="duration_fifteen_min">Quarter hourly</string>
-    <string name="duration_half_hour">Half hourly</string>
-    <string name="duration_hourly">Hourly</string>
-    <string name="duration_bihourly">Bi-hourly</string>
-    <string name="duration_twice_daily">Twice daily</string>
-    <string name="duration_daily">Daily</string>
-    <string name="duration_weekly">Weekly</string>
+  <string name="install_error_unknown">Installer failure (Unknown reason)</string>
+  <string name="install_error_blocked">Installation was blocked</string>
+  <string name="install_error_invalid">One or more APKs were invalid or corrupt</string>
+  <string name="install_error_conflict">Conflicts with an existing app, usually due to mismatched signatures</string>
+  <string name="install_error_storage">Not enough storage available to install</string>
+  <string name="install_error_incompatible">Application is incompatible with this device</string>
+  <string name="install_error_timeout">Installer timed out</string>
 
-    <string name="settings_appearance">Appearance</string>
-    <string name="settings_appearance_description">Change the look and feel of the app</string>
-    <string name="settings_dynamic_color">Dynamic color</string>
-    <string name="settings_dynamic_color_description">Only available on Android 12 and up</string>
-    <string name="settings_theme">Theme</string>
-    <string name="settings_check_updates">Check for Discord updates</string>
+  <string name="install_group_prepare">Prepare</string>
+  <string name="install_group_download">Download dependencies</string>
+  <string name="install_group_patch">Patch APK</string>
+  <string name="install_group_install">Install APK</string>
 
-    <string name="settings_customization">Customization</string>
-    <string name="settings_customization_description">Customize your Valenced installation</string>
-    <string name="settings_app_name">App name</string>
-    <string name="settings_app_icon">Replace app icon</string>
-    <string name="settings_app_icon_description">Uses the Valenced icon instead of Discord\'s</string>
+  <string name="patch_step_fetch_rna">Fetching latest Discord info</string>
+  <string name="patch_step_fetch_kt_version">Fetching target Discord version</string>
+  <string name="patch_step_downgrade_check">Checking for newer installations</string>
+  <string name="patch_step_restore_cache">Restoring from cache</string>
+  <string name="patch_step_dl_kt_apk">Downloading Discord APK</string>
+  <string name="patch_step_dl_kotlin">Downloading Kotlin library</string>
+  <string name="patch_step_dl_injector">Downloading Injector</string>
+  <string name="patch_step_dl_aliuhook">Downloading Hook library</string>
+  <string name="patch_step_dl_smali">Downloading smali patches</string>
+  <string name="patch_step_copy_deps">Copying dependencies</string>
+  <string name="patch_step_patch_manifests">Patching APK manifest</string>
+  <string name="patch_step_patch_icon">Patching app icon</string>
+  <string name="patch_step_add_injector">Adding injector</string>
+  <string name="patch_step_add_aliuhook">Adding hook library</string>
+  <string name="patch_step_patch_smali">Applying smali patches</string>
+  <string name="patch_step_reorganize_dex">Adding .dex files to APK</string>
+  <string name="patch_step_save_metadata">Store metadata</string>
+  <string name="patch_step_alignment">Aligning APK</string>
+  <string name="patch_step_signing">Signing APK</string>
+  <string name="patch_step_install">Installing APK</string>
+  <string name="patch_step_cleanup">Cleaning up</string>
 
-    <string name="settings_advanced">Advanced</string>
-    <string name="settings_advanced_description">Modify downloading and installation</string>
-    <string name="settings_mirror">Download mirror</string>
-    <string name="settings_auto_clear_cache">Clear cache automatically</string>
-    <string name="settings_auto_clear_cache_description">Clears cache when Discord gets an update</string>
+  <string name="patch_step_dl_baseapk">Downloading base APK</string>
+  <string name="patch_step_dl_libapk">Downloading libs apk</string>
+  <string name="patch_step_dl_langapk">Downloading lang apk</string>
+  <string name="patch_step_dl_resapk">Downloading resources apk</string>
+  <string name="patch_step_inject_shiggy">Injecting Valenced with LSPatch</string>
+  <string name="patch_step_dl_wtxposed">Downloading Valenced</string>
 
-    <string name="settings_developer">Developer only</string>
-    <string name="settings_developer_description">These settings may break things if used improperly</string>
-    <string name="settings_module_location">Module location</string>
-    <string name="settings_module_location_description">An Xposed module to patch with instead.</string>
-    <string name="settings_module_location_reset">Reset module location</string>
-    <string name="settings_patch_bundle_location">Patch bundle location</string>
-    <string name="settings_patch_bundle_location_description">A .reseam file to patch with instead. Leave empty for the official release.</string>
-    <string name="settings_package_name">Package name</string>
-    <string name="settings_debuggable">Debuggable</string>
-    <string name="settings_debuggable_description">Enable debuggable flag</string>
-    <string name="settings_allow_downgrade">Allow downgrading</string>
-    <string name="settings_allow_downgrade_description">Bypass downgrade check by Valenced Manager, useful if your device already allows downgrading through root</string>
+  <string name="status_queued">Queued</string>
+  <string name="status_ongoing">Ongoing</string>
+  <string name="status_skipped">Skipped</string>
+  <string name="status_success">Success</string>
+  <string name="status_failed">Failed</string>
 
-    <string name="settings_logs_alternate_lines">Alternate lines</string>
-    <string name="settings_logs_line_wrap">Wrap lines</string>
+  <string name="installer_abort_title">Really exit?</string>
+  <string name="installer_abort_body">Are you sure you really want to abort an in-progress installation?</string>
 
-    <string name="update_description">Valenced Manager %1$s is available!</string>
+  <string
+    name="updater_body"
+  >A new update has been released for Valenced Manager! It may be required in order to function properly. Would you like to update?</string>
+  <string name="updater_title">Update to v%s</string>
+  <string name="updater_check_fail">Failed to check for updates!</string>
+  <string name="updater_update_fail">Failed to update! Please download and install the update manually!</string>
 
+  <string name="downloader_err_unknown">Download failed (Unknown)</string>
+  <string name="downloader_err_timeout">Download failed (Timeout)</string>
+  <string name="downloader_err_response">Download failed (Invalid response)</string>
+  <string name="downloader_err_file_exists">Download failed (File exists)</string>
+  <string name="downloader_err_storage_space">Download failed (Insufficient space)</string>
 
-    <string name="label_github">GitHub</string>
-    <string name="label_discord">Discord</string>
-    <string name="label_team">Team</string>
-    <string name="label_special_thanks">Special thanks</string>
-    <string name="label_translate">Translate</string>
+  <string name="home_network_fail">Failed to fetch data!</string>
 
-    <string name="battery_opt_title">Battery Optimization</string>
-    <string name="battery_opt_description">Disabling battery optimization is required to keep downloads running reliably in the background or when the screen is off.</string>
-    <string name="battery_opt_confirm">Allow</string>
-    <string name="battery_opt_dismiss">Later</string>
-    <string name="battery_opt_error">Could not open battery optimization settings.</string>
+  <string
+    name="patchopts_title"
+  >The manager provides several customizations at installation time that are not able to be changed once installed.</string>
+  <string name="patchopts_pkgname_title">Package Name</string>
+  <string
+    name="patchopts_pkgname_desc"
+  >The package name is a unique identifier for all apps. Using different ones can allow for multiple installations of Valenced.</string>
+  <string name="patchopts_pkgname_invalid">Invalid package name!</string>
+  <string name="patchopts_pkgname_taken">Target app will be overwritten!</string>
+  <string name="patchopts_pkgname_ok">Valid package name!</string>
+  <string name="patchopts_appname_title">App Name</string>
+  <string
+    name="patchopts_appname_desc"
+  >The app name is what\'s displayed in your home launcher. This should be changed on secondary installations for ease of use.</string>
+  <string name="patchopts_debuggable_title">Debuggable</string>
+  <string name="patchopts_debuggable_desc">Enable the debuggable manifest flag. Only use this if you know what you are doing!</string>
+  <string name="patchopts_icon_title">Replace app icon</string>
+  <string name="patchopts_icon_desc">Change the app\'s icon to Valenced\'s icon (or a custom one) instead of Discord\'s.</string>
+  <string name="patchopts_divider_basic">Basic</string>
+  <string name="patchopts_divider_advanced">Advanced</string>
+  <string name="patchopts_warning_invalid_iconopts">The selected icon options are invalid!</string>
+  <string name="patchopts_verchannel_title">Version channel</string>
+  <string name="patchopts_verchannel_desc">Select the release channel to install from, or choose Custom to enter a specific version code.</string>
+  <string name="patchopts_vercode_title">Custom Version Code</string>
+  <string name="patchopts_vercode_desc">Manually enter a Discord version code to fetch and install.</string>
 
-    <string name="version_target">Target: %1$s</string>
-    <string name="version_current">Current: %1$s</string>
-    <string name="install_method">Install method</string>
-    <string name="default_installer">PackageManager (recommended)</string>
-    <string name="shizuku_installer">Shizuku</string>
+  <string name="iconopts_screen_title">Icon Replacement</string>
+  <string name="iconopts_variant_title_old_discord">Old Discord</string>
+  <string name="iconopts_variant_desc_old_discord">The old Discord color and logo.</string>
+  <string name="iconopts_variant_title_color">Custom Color</string>
+  <string name="iconopts_variant_title_image">Custom Image</string>
+  <string name="iconopts_variant_desc_discord">Does not alter the original icon, instead only adding the missing monochrome icon to the APK.</string>
+  <string name="iconopts_variant_desc_aliucord">Changes the original icon color to Valenced\'s branding.</string>
+  <string name="iconopts_variant_desc_shiggy">Changes the original icon color to Valenced\'s branding.</string>
+  <string name="iconopts_variant_desc_color">Select a custom icon background color.</string>
+  <string
+    name="iconopts_variant_desc_image"
+  >Select a custom replacement image. Note that the image must have sufficient padding as per the Adaptive Icon foreground guidelines. Maximum image size is 256KiB.</string>
+  <string name="iconopts_colorpicker_title">Hue &amp; Saturation</string>
+  <string name="iconopts_colorpicker_desc">The main HSV color components.</string>
+  <string name="iconopts_lightness_title">Lightness</string>
+  <string name="iconopts_lightness_desc">The brightness component of the color.</string>
+  <string name="iconopts_hex_title">Hex Color</string>
+  <string name="iconopts_hex_desc">Manually enter the RGB hex value of the color. Transparency is ignored!</string>
+  <string name="iconopts_failed_image">Failed to open image</string>
+  <string name="iconopts_failed_image_too_big">Image size exceeds maximum of 256KiB</string>
+  <string name="iconopts_btn_open_selection">Select Image</string>
+  <string name="iconopts_btn_open_example_image">Example image</string>
+  <string name="iconopts_image_preview_none">No image selected</string>
+  <string name="iconopts_image_preview_desc">A full, uncropped preview of the selected image.</string>
+  <string name="iconopts_image_preview_title">Preview</string>
+  <string name="iconopts_icon_preview_title">Icon Preview</string>
+  <string
+    name="iconopts_icon_preview_desc"
+  >A preview of the selected options, cropped and scaled to show how the icon will appear on your device</string>
+
+  <string name="log_title">Log</string>
+  <string name="log_section_install_info">Installation Info</string>
+  <string name="log_section_env_info">Environment Info</string>
+  <string name="log_section_error">Error Stacktrace</string>
+  <string name="log_section_log">Installation Log</string>
+  <string name="log_action_export">Export log</string>
+  <string name="log_action_export_apk">Export Patched APK</string>
+  <string name="settings_share_custom_apk">Share Custom APK</string>
+  <string name="log_action_share">Share log</string>
+
+  <string name="logs_title">Logs</string>
+  <string name="logs_none">No logs present!</string>
+  <string name="logs_action_delete_all">Delete all logs</string>
+  <string name="logs_status_delete_success">Successfully deleted all logs</string>
+  <string name="logs_wipe_title">Clear Logs</string>
+  <string name="logs_wipe_desc">Are you sure you want to permanently delete all the logs?</string>
+
+  <string name="notif_group_install_title">Active installation</string>
+  <string name="notif_group_install_desc">Progress notifications sent during a minimized installation</string>
+  <string name="notif_install_ready_title">Valenced installation ready!</string>
+  <string name="notif_install_ready_desc">Click to install...</string>
+  <string name="notif_install_fail_title">Valenced failed to install</string>
+  <string name="notif_install_fail_desc">Click to view more info...</string>
+
+  <string name="play_protect_warning_title">Play Protect</string>
+  <string
+    name="play_protect_warning_desc"
+  >Google Play Protect appears to be enabled on your device. It may attempt to interfere with a new installation due to the usage of a unique signing key. You can disable it in Play Protect\'s settings. If it does show a warning dialog, press &quot;More Details&quot; -&gt; &quot;Install anyway&quot;</string>
+  <string name="play_protect_warning_ok">Continue</string>
+  <string name="play_protect_warning_open_gpp">Open Play Protect</string>
+  <string name="play_protect_warning_disable">Don\'t show this again</string>
+
+  <string name="custom_component_picker_title">Custom Component</string>
+  <string name="custom_component_picker_desc">A custom local version for a patching component (%s) has been found. Would you like to use it?</string>
+
+  <string name="permissions_shizuku_denied">Failed to obtain Shizuku permissions</string>
+
+  <string name="fun_fact_prefix">Valenced: %s</string>
+  <string name="fun_fact_1">Valenced runs on modern Discord Android using high-performance Hermes bytecode!</string>
+  <string name="fun_fact_2">Valenced Manager supports multiple independent Discord installations.</string>
+  <string name="fun_fact_3">Custom app icons are patched byte-for-byte in binary XML and ARSC.</string>
+  <string name="fun_fact_4">Each Valenced installation can have distinct package names and themes.</string>
+  <string name="fun_fact_5">Valenced features a native Xposed bridge for low-level optimizations.</string>
+  <string name="fun_fact_6">Full Material You and AMOLED pitch-black themes are supported.</string>
+  <string name="fun_fact_7">LSPatch seamlessly injects the Valenced Xposed module without root.</string>
+  <string name="fun_fact_8">SessionInstaller and Shizuku guarantee smooth on-device installations.</string>
+  <string name="fun_fact_9">You can reconfigure installed instances anytime from the Home screen!</string>
+  <string name="fun_fact_10">Signature Valenced Cyan is #37EBFF.</string>
+  <string name="fun_fact_11">Fast, clean, and built for speed and precision.</string>
+  <string name="fun_fact_12">Enjoy Valenced!</string>
+
 </resources>

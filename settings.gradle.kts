@@ -1,16 +1,29 @@
-rootProject.name = "valenced-manager"
+@file:Suppress("UnstableApiUsage")
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
     repositories {
-        gradlePluginPortal()
-        mavenCentral()
         google()
+        mavenCentral()
+        maven { url = uri("https://maven.rikka.app/releases") }
     }
 }
 
-include(":app")
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            name = "aliucord"
+            url = uri("https://maven.aliucord.com/snapshots")
+        }
+        maven {
+            name = "jitpack"
+            url = uri("https://jitpack.io")
+        }
+    }
+}
 
-// A local Reseam engine checkout replaces the published SDK.
-(System.getenv("RESEAM_WORKSPACE") ?: providers.gradleProperty("reseam.workspace").orNull)
-    ?.takeIf { it.isNotBlank() }
-    ?.let { includeBuild(it) }
+rootProject.name = "AliucordManager"
+include(":app")
