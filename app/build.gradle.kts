@@ -1,18 +1,22 @@
+@file:Suppress("UnstableApiUsage")
+
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
+
 plugins {
-    alias(libs.plugins.aboutlibraries)
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.hiddenApi.refine)
 }
 
-/** Valenced's Reseam patches public key. */
-val patchesPublicKey = providers.gradleProperty("patchesPublicKey").orNull.orEmpty().also {
-    require(it.matches(Regex("[0-9a-f]{64}"))) {
-        "Set patchesPublicKey in gradle.properties to the hex public key Valenced patch bundle is signed with"
-    }
-}
+val isRelease = System.getenv("RELEASE")?.toBoolean() ?: false
+val gitCurrentBranch = "main"
+val gitLatestCommit = "dev"
+val gitHasLocalCommits = false
+val gitHasHasLocalChanges = false
 
 android {
     namespace = "app.valenced.manager"
@@ -21,61 +25,66 @@ android {
     defaultConfig {
         applicationId = "app.valenced.manager"
         minSdk = 28
-        targetSdk = 34
-        versionName = version.toString()
-        versionCode = versionName!!.removePrefix("v").split("-").first().replace(".", "").toInt()
-
-        buildConfigField("String", "MOD_NAME", "\"Valenced\"")
-        buildConfigField("String", "REPO", "\"Valenced/valenced\"")
-        buildConfigField("String", "BUNDLE_PUBLIC_KEY", "\"$patchesPublicKey\"")
-        buildConfigField("String", "ORG_LINK", "\"https://github.com/Valenced\"")
-        buildConfigField("String", "INVITE_LINK", "\"https://discord.com/invite/dtBTQHYSx4\"")
-        buildConfigField("String", "MODDED_APP_PACKAGE_NAME", "\"app.valenced\"")
-        buildConfigField("int", "MODDED_APP_ICON", "0xFF37EBFF")
-        buildConfigField("int", "MODDED_APP_ICON_ALPHA", "0xFFFBB33C")
-        buildConfigField("int", "MODDED_APP_ICON_OTHER", "0xFFD3575E")
-
-        buildConfigField("String", "GIT_BRANCH", "\"${getCurrentBranch()}\"")
-        buildConfigField("String", "GIT_COMMIT", "\"${getLatestCommit()}\"")
-        buildConfigField("boolean", "GIT_LOCAL_COMMITS", "${hasLocalCommits()}")
-        buildConfigField("boolean", "GIT_LOCAL_CHANGES", "${hasLocalChanges()}")
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        targetSdk = 36
+        versionCode = 10_01_02
+        versionName = "1.1.2-beta"
         vectorDrawables {
             useSupportLibrary = true
+        }
+
+        buildConfigField("String", "APPLICATION_NAME", "\"Valenced Manager\"")
+        buildConfigField("String", "TAG", "\"ValencedManager\"")
+        buildConfigField("String", "MOD_NAME", "\"Valenced\"")
+        buildConfigField("String", "REPO", "\"Valenced/valenced\"")
+        buildConfigField("String", "MODDED_APP_PACKAGE_NAME", "\"app.valenced\"")
+
+        buildConfigField("String", "GITHUB_ORG", "\"Valenced\"")
+        buildConfigField("String", "SUPPORT_SERVER", "\"\"")
+
+        buildConfigField("String", "BACKEND_URL", "\"https://aliucord.com/\"")
+
+        buildConfigField("Boolean", "RELEASE", isRelease.toString())
+        buildConfigField("String", "GIT_BRANCH", "\"$gitCurrentBranch\"")
+        buildConfigField("String", "GIT_COMMIT", "\"$gitLatestCommit\"")
+        buildConfigField("boolean", "GIT_LOCAL_COMMITS", "$gitHasLocalCommits")
+        buildConfigField("boolean", "GIT_LOCAL_CHANGES", "$gitHasHasLocalChanges")
+    }
+
+    signingConfigs {
+        create("release") {
+            enableV1Signing = true
+            enableV2Signing = true
+            enableV3Signing = true
+            enableV4Signing = true
+            keyAlias = System.getenv("SIGNING_KEY_ALIAS")
+            keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
+            storeFile = System.getenv("SIGNING_STORE_FILE")?.let(::File)
+            storePassword = System.getenv("SIGNING_STORE_PASSWORD")
         }
     }
 
     buildTypes {
+        val isRelease = System.getenv("RELEASE")?.toBoolean() ?: false
+        val hasReleaseSigning = System.getenv("SIGNING_STORE_PASSWORD")?.isNotEmpty() == true
+
+        if (isRelease && !hasReleaseSigning)
+            error("Missing keystore in a release workflow!")
+
         release {
-            isCrunchPngs = true
             isMinifyEnabled = true
             isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
-
-            val keystoreFile = file("keystore.jks")
-            signingConfig = if (keystoreFile.exists()) {
-                 signingConfigs.create("release") {
-                    storeFile = keystoreFile
-                    storePassword = System.getenv("KEYSTORE_PASSWORD")
-                    keyAlias = System.getenv("KEYSTORE_ENTRY_ALIAS")
-                    keyPassword = System.getenv("KEYSTORE_ENTRY_PASSWORD")
-                }
-            } else signingConfigs["debug"]
+            isCrunchPngs = true
+            signingConfig = signingConfigs.getByName(if (hasReleaseSigning) "release" else "debug")
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
-    }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    buildFeatures {
-        compose = true
-        buildConfig = true
+        create("staging") {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            isCrunchPngs = true
+            signingConfig = signingConfigs.getByName("debug")
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
     }
 
     androidComponents {
@@ -86,79 +95,144 @@ android {
                 add("/kotlin-tooling-metadata.json")
                 // Kotlin debugging (https://github.com/Kotlin/kotlinx.coroutines/issues/2274)
                 add("/DebugProbesKt.bin")
+                // Reflection symbol list (https://stackoverflow.com/a/41073782/13964629)
+                add("/**/*.kotlin_builtins")
             }
         }
     }
 
     packaging {
         resources {
-            // Reflection symbol list (https://stackoverflow.com/a/41073782/13964629)
-            excludes += "/**/*.kotlin_builtins"
+            // okhttp3 is used by some lib (no cookies so publicsuffixes.gz can be dropped)
+            excludes += "/okhttp3/**"
+
+            // Remnants of smali/baksmali lib
+            excludes += "/*.properties"
+            excludes += "/org/antlr/**"
+            excludes += "/com/android/tools/smali/**"
+            excludes += "/org/eclipse/jgit/**"
+
+            // bouncycastle
+            excludes += "/META-INF/versions/9/OSGI-INF/MANIFEST.MF"
+            excludes += "/org/bouncycastle/**"
+        }
+        jniLibs {
+            // x86 is dead
+            excludes += "/lib/x86/*.so"
+
+            // Equivalent of AndroidManifest's extractNativeLibs=false
+            useLegacyPackaging = false
         }
     }
 
-}
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
 
-base {
-    archivesName = "${rootProject.name}-$version"
-}
+    buildFeatures {
+        buildConfig = true
+        compose = true
+    }
 
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_17
+    lint {
+        disable += "ModifierParameter"
     }
 }
 
-composeCompiler {
-    reportsDestination = layout.buildDirectory.dir("report")
+kotlin {
+    sourceSets.all {
+        languageSettings.enableLanguageFeature("ExplicitBackingFields")
+    }
+    compilerOptions {
+        val reportsDir = layout.buildDirectory.asFile.get()
+            .resolve("reports").absolutePath
+
+        jvmTarget = JvmTarget.JVM_1_8
+        freeCompilerArgs.addAll(
+            "-opt-in=kotlin.time.ExperimentalTime",
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+            "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
+            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+            "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
+            "-P", "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${reportsDir}",
+            "-XXLanguage:+PropertyParamAnnotationDefaultTargetMode", // @StringRes in field parameters of a class warning
+        )
+    }
+}
+
+tasks.withType<JavaCompile> {
+    // Disable warnings about obsolete target version
+    options.compilerArgs.add("-Xlint:-options")
 }
 
 dependencies {
-    implementation(platform(libs.compose.bom))
-
     implementation(libs.bundles.accompanist)
     implementation(libs.bundles.androidx)
     implementation(libs.bundles.coil)
     implementation(libs.bundles.compose)
     implementation(libs.bundles.koin)
     implementation(libs.bundles.ktor)
-    implementation(libs.bundles.shizuku)
     implementation(libs.bundles.voyager)
 
-    implementation(libs.aboutlibraries.core)
-    implementation(libs.kotlinx.datetime)
-    implementation(libs.kotlinx.collections)
-    implementation(libs.reseam.sdk)
+    implementation(files("libs/lspatch.aar"))
+
+    implementation(libs.compose.ui.tooling.preview)
+    debugImplementation(libs.compose.ui.tooling)
+    debugImplementation(libs.compose.runtime.tracing)
+
+    implementation(libs.kotlinx.immutable)
+    implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.apksig)
+    implementation(libs.axml)
+    implementation(libs.bouncycastle)
+    implementation(libs.binaryResources)
+    implementation(libs.diff)
+    implementation(libs.microg)
+    implementation(libs.bundles.shizuku)
+    implementation(libs.smali)
+    implementation(libs.baksmali)
+    implementation(libs.compose.pipette)
+    implementation(libs.compose.shimmer)
+    implementation(libs.zip)
+
+    compileOnly(libs.hiddenApi.stub)
+    implementation(libs.hiddenApi.refine)
+    implementation(libs.hiddenApi.bypass)
+    coreLibraryDesugaring(libs.desugaring)
 }
 
-fun getCurrentBranch(): String? =
-    exec("git", "symbolic-ref", "--short", "HEAD")
+configurations.all {
+    exclude(group = "org.bouncycastle")
+    exclude(group = "org.checkerframework", module = "checker-qual")
+    exclude(group = "com.aliucord", module = "axml")
 
-fun getLatestCommit(): String? =
-    exec("git", "rev-parse", "--short", "HEAD")
+    // Exclude apksig, as it's bundled in LSPatch
+    exclude(group = "com.android.tools.build", module = "apksig")
 
-fun hasLocalCommits(): Boolean {
-    val branch = getCurrentBranch() ?: return false
-    return exec("git", "log", "origin/$branch..HEAD")?.isNotBlank() ?: false
+    // Exclude jcommander
+    exclude(group = "com.beust", module = "jcommander")
+
+    // Exclude Google Guava and its related modules
+    exclude(group = "com.google.guava")
+
+    // Exclude other common utility/annotation libraries
+    exclude(group = "com.google.errorprone", module = "error_prone_annotations")
+    exclude(group = "com.google.j2objc", module = "j2objc-annotations")
+    exclude(group = "com.google.code.findbugs", module = "jsr305")
 }
 
-fun hasLocalChanges(): Boolean =
-    exec("git", "status", "-s")?.isNotEmpty() ?: false
-
-fun exec(vararg command: String): String? {
-    return try {
-        val result = providers.exec {
-            commandLine = command.toList()
-            isIgnoreExitValue = true
-        }
-        val errout = result.standardError.asText.get()
-
-        if (errout.isNotEmpty())
-            throw Error(errout)
-
-        result.standardOutput.asText.get().trim()
-    } catch (e: Throwable) {
-        e.printStackTrace()
-        null
+fun ProviderFactory.execIgnoreCode(vararg command: String): String = run {
+    val result = exec {
+        commandLine = command.toList()
+        isIgnoreExitValue = true
     }
+
+    val stderr = result.standardError.asText.get()
+    if (stderr.isNotEmpty())
+        throw RuntimeException(stderr)
+
+    result.standardOutput.asText.get().trim()
 }

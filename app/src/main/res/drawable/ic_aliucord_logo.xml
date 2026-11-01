@@ -1,0 +1,5 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Redirect the old Aliucord logo drawable to use the project's Shiggy rounded logo.
+         This keeps a single source of truth for the Shiggy image and avoids duplicating vector paths. -->
+    <item android:drawable="@drawable/ic_rounded_shiggy" />
+</layer-list>
