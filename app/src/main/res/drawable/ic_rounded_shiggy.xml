@@ -5,9 +5,8 @@
   android:viewportWidth="256"
   android:viewportHeight="256"
 >
-
-  <!-- Solid circular background (Shiggy yellow) -->
-  <path android:fillColor="#fcc680" android:pathData="M256,128 A128,128 0 1,1 0,128 A128,128 0 1,1 256,128 Z" />
+  <!-- Solid circular background (Valenced Cyan) -->
+  <path android:fillColor="#37EBFF" android:pathData="M256,128 A128,128 0 1,1 0,128 A128,128 0 1,1 256,128 Z" />
 
   <!-- White Discord mark (scaled down and centered) -->
   <group android:scaleX="0.7" android:scaleY="0.7" android:translateX="38.4" android:translateY="38.4">

@@ -59,14 +59,16 @@ data class SemVer(
             ?: throw IllegalArgumentException("Invalid semver string $version")
 
         fun parseOrNull(version: String): SemVer? {
-            val parts = version.removePrefix("v").split(".")
+            val clean = version.trim().removePrefix("v").removePrefix("V")
+            val parts = clean.split(".")
 
-            if (parts.size != 3)
+            if (parts.size < 3)
                 return null
 
             val major = parts[0].toIntOrNull() ?: return null
             val minor = parts[1].toIntOrNull() ?: return null
-            val patch = parts[2].toIntOrNull() ?: return null
+            val patchRaw = parts[2].substringBefore("-").substringBefore("+")
+            val patch = patchRaw.toIntOrNull() ?: return null
 
             return SemVer(major, minor, patch)
         }

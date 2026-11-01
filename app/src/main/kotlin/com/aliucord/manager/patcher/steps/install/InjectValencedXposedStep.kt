@@ -4,7 +4,7 @@ import com.aliucord.manager.patcher.StepRunner
 import com.aliucord.manager.patcher.steps.StepGroup
 import com.aliucord.manager.patcher.steps.base.Step
 import com.aliucord.manager.patcher.steps.download.CopyDependenciesStep
-import com.aliucord.manager.patcher.steps.download.DownloadShiggyXposedStep
+import com.aliucord.manager.patcher.steps.download.DownloadValencedXposedStep
 import com.aliucord.manager.patcher.util.Signer
 import app.valenced.manager.R
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +15,7 @@ import org.lsposed.patch.util.Logger
 import java.io.File
 import java.util.*
 
-class InjectShiggyXposedStep : Step() {
+class InjectValencedXposedStep : Step() {
     override val group: StepGroup = StepGroup.Install
     override val localizedName: Int = R.string.patch_step_inject_shiggy
 
@@ -59,10 +59,10 @@ class InjectShiggyXposedStep : Step() {
 
     override suspend fun execute(container: StepRunner) {
         val apks = container.getStep<CopyDependenciesStep>().patchedApks
-        val xposed = container.getStep<DownloadShiggyXposedStep>().targetFile
+        val xposed = container.getStep<DownloadValencedXposedStep>().targetFile
 
-        container.log("Adding ShiggyXposed module with LSPatch")
-        container.log("ShiggyXposed path = ${xposed.absolutePath}")
+        container.log("Adding Valenced module with LSPatch")
+        container.log("Valenced module path = ${xposed.absolutePath}")
 
         // Create temporary folder in working directory
         val tempDir = apks.first().parentFile!!.resolve("lspatched")

@@ -31,17 +31,18 @@ class SaveMetadataStep(private val options: PatchOptions) : Step(), KoinComponen
         val aliuhook = container.getStepOrNull<DownloadAliuhookStep>()
         val injector = container.getStepOrNull<DownloadInjectorStep>()
         val patches = container.getStepOrNull<DownloadPatchesStep>()
-        val shiggyXposed = container.getStepOrNull<DownloadShiggyXposedStep>()
+        val valencedXposed = container.getStepOrNull<DownloadValencedXposedStep>()
 
         val metadata = InstallMetadata(
             options = options,
             customManager = !BuildConfig.RELEASE,
-            managerVersion = SemVer.parse(BuildConfig.VERSION_NAME),
+            managerVersion = SemVer.parseOrNull(BuildConfig.VERSION_NAME) ?: SemVer(1, 1, 2),
             aliuhookVersion = aliuhook?.targetVersion,
             injectorVersion = injector?.targetVersion,
             patchesVersion = patches?.targetVersion,
             lspatchVersion = LSPConfig.instance.VERSION_CODE,
-            shiggyXposedVersion = shiggyXposed?.targetVersion,
+            valencedXposedVersion = valencedXposed?.targetVersion,
+            shiggyXposedVersion = valencedXposed?.targetVersion,
         )
 
         container.log("Writing serialized install metadata to APK")

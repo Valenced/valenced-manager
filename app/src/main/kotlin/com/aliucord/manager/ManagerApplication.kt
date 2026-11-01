@@ -51,12 +51,12 @@ class ManagerApplication : Application() {
                 singleOf(::AliucordGithubService)
                 singleOf(::AliucordMavenService)
                 singleOf(::RNATrackerService)
-                singleOf(::ShiggyGithubService)
+                singleOf(::ValencedGithubService)
             })
 
             // UI Models
             modules(module {
-                factory { HomeModel(get<Application>(), get<AliucordGithubService>(), get<AliucordMavenService>(), get<ShiggyGithubService>(), get<RNATrackerService>(), get<kotlinx.serialization.json.Json>(), get<com.aliucord.manager.manager.PreferencesManager>()) }
+                factory { HomeModel(get<Application>(), get<AliucordGithubService>(), get<AliucordMavenService>(), get<ValencedGithubService>(), get<RNATrackerService>(), get<kotlinx.serialization.json.Json>(), get<com.aliucord.manager.manager.PreferencesManager>()) }
 
                 factoryOf(::AboutModel)
                 factoryOf(::PatchingScreenModel)

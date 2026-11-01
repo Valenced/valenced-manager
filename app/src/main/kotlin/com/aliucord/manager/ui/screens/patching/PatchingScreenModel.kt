@@ -9,7 +9,7 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import com.aliucord.manager.manager.*
 import com.aliucord.manager.patcher.StepRunner
-import com.aliucord.manager.patcher.ShiggyPatchRunner
+import com.aliucord.manager.patcher.ValencedPatchRunner
 import com.aliucord.manager.patcher.steps.StepGroup
 import com.aliucord.manager.patcher.steps.base.*
 import com.aliucord.manager.patcher.steps.install.InstallStep
@@ -125,7 +125,7 @@ class PatchingScreenModel(
     }
 
     private suspend fun startPatchRunner() {
-        val runner = ShiggyPatchRunner(options)
+        val runner = ValencedPatchRunner(options)
             .also { stepRunner = it }
 
         val newSteps = runner.steps.groupBy { it.group }

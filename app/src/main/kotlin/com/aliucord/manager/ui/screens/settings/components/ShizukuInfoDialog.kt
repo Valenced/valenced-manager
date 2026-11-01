@@ -46,7 +46,7 @@ fun ShizukuInfoDialog(
                 Text(
                     "1. Open the Shizuku app\n" +
                     "2. Grant permissions in the Shizuku app\n" +
-                    "3. Relaunch Shiggy Manager to apply changes\n\n",
+                    "3. Relaunch Valenced Manager to apply changes\n\n",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
                 )

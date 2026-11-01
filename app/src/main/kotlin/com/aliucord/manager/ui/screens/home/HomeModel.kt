@@ -37,7 +37,7 @@ class HomeModel(
     private val application: Application,
     private val github: AliucordGithubService,
     private val maven: AliucordMavenService,
-    private val wtGithub: ShiggyGithubService,
+    private val wtGithub: ValencedGithubService,
     private val rnaTracker: RNATrackerService,
     private val json: kotlinx.serialization.json.Json,
     private val preferences: com.aliucord.manager.manager.PreferencesManager,
@@ -51,7 +51,7 @@ class HomeModel(
     private val refreshingLock = Mutex()
     private var remoteDataJson: BuildInfo? = null
     private var trackerIndexJson: RNATrackerIndex? = null
-    private var latestShiggyXposedVersion: SemVer? = null
+    private var latestValencedXposedVersion: SemVer? = null
     private var latestAliuhookVersion: SemVer? = null
 
     init {
@@ -227,15 +227,15 @@ class HomeModel(
                     success = {
                         val versionName = it.name
                         val truncatedVersion = versionName.split(".").take(3).joinToString(".")
-                        latestShiggyXposedVersion = SemVer.parse(truncatedVersion)
+                        latestValencedXposedVersion = SemVer.parseOrNull(truncatedVersion) ?: SemVer(1, 3, 0)
                     },
-                    fail = { Log.w(BuildConfig.TAG, "Failed to fetch latest ShiggyXposed version", it) },
+                    fail = { Log.w(BuildConfig.TAG, "Failed to fetch latest Valenced version", it) },
                 )
             },
 
             ).joinAll()
 
-        if (trackerIndexJson == null /* remoteDataJson == null || latestAliuhookVersion == null */ || latestShiggyXposedVersion == null) {
+        if (trackerIndexJson == null /* remoteDataJson == null || latestAliuhookVersion == null */ || latestValencedXposedVersion == null) {
             mainThread { application.showToast(R.string.home_network_fail) }
         }
     }
@@ -299,7 +299,7 @@ class HomeModel(
         // Try to parse install metadata. If none present, install was made via legacy installer.
         val apkPath = pkg.applicationInfo?.publicSourceDir ?: return false
         val installMetadata = try {
-            val metadataFile = ZipReader(apkPath).use { it.openEntry("shiggy.json")?.read() }
+            val metadataFile = ZipReader(apkPath).use { (it.openEntry("valenced.json") ?: it.openEntry("shiggy.json"))?.read() }
                 ?: return false
 
             @OptIn(ExperimentalSerializationApi::class)
@@ -316,6 +316,6 @@ class HomeModel(
             VersionPreference.Custom -> return true
         }
 
-        return latestByPref == versionCode && installMetadata.shiggyXposedVersion == latestShiggyXposedVersion
+        return latestByPref == versionCode && (installMetadata.xposedVersion == latestValencedXposedVersion || installMetadata.valencedXposedVersion == latestValencedXposedVersion || installMetadata.shiggyXposedVersion == latestValencedXposedVersion)
     }
 }

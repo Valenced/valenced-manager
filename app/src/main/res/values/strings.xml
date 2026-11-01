@@ -9,7 +9,7 @@
   <string name="installer">Installer</string>
 
   <string name="shiggy" translatable="false">Valenced</string>
-  <string name="aliucord_description">A mod for the Discord Android App</string>
+  <string name="aliucord_description">A modern mod for the Discord Android App</string>
 
   <string name="action_cancel">Cancel</string>
   <string name="action_retry">Retry</string>
@@ -40,11 +40,11 @@
   <string name="action_reinstall">Reinstall</string>
 
   <string name="permissions_grant_title">Grant Permissions</string>
-  <string name="storage_permissions_grant_body">In order for Shiggy Manager to function, file permissions are required.</string>
-  <string name="install_permissions_grant_body">Installing Shiggy requires granting permissions to install apps from unknown sources.</string>
+  <string name="storage_permissions_grant_body">In order for Valenced Manager to function, file permissions are required.</string>
+  <string name="install_permissions_grant_body">Installing Valenced requires granting permissions to install apps from unknown sources.</string>
 
   <string name="installs_no_installs">No installations found!</string>
-  <string name="launch_aliucord_fail">Failed to launch Shiggy</string>
+  <string name="launch_aliucord_fail">Failed to launch Valenced</string>
 
   <string name="settings_header_advanced">Advanced</string>
   <string name="settings_header_appearance">Appearance</string>
@@ -58,7 +58,7 @@
     name="setting_dynamic_color_desc"
   >Enables Material You theming on Android 12+; dynamic colors will also be applied to the Amoled theme when enabled</string>
   <string name="setting_installer">Installer</string>
-  <string name="setting_installer_desc">The method to use for installing Shiggy</string>
+  <string name="setting_installer_desc">The method to use for installing Valenced</string>
   <string name="setting_developer_options">Developer options</string>
   <string name="setting_developer_options_desc">Don\'t enable this unless you know what it does! (yes, really)</string>
   <string name="setting_keep_patched_apks">Keep patched APKs</string>
@@ -71,7 +71,7 @@
 
   <string
     name="about_manager_credit_disclaimer_notice"
-  >This manager is a fork of the original Aliucord Manager project, Which was a forked by wintry, and now rebranded as Shiggy Manager. Credit to the original project\'s maintainers for the foundational work; continued development and branding are by the Shiggy team.</string>
+  >Valenced Manager: Modern, high-performance client modification manager built for Valenced on Android.</string>
 
   <string name="theme_system">System</string>
   <string name="theme_dark">Dark</string>
@@ -87,7 +87,7 @@
   <string name="contributors_contributions">%d contributions</string>
   <string name="contributors">Contributors</string>
   <string name="lead_role_kettu">Kettu - Creator</string>
-  <string name="lead_role_shiggycord">ShiggyCord - Creator</string>
+  <string name="lead_role_shiggycord">Valenced - Creator</string>
   <string name="lead_role_bunny">Bunny - Creator</string>
   <string name="role_creator_vendetta">Vendetta - Creator</string>
   <string name="role_original_manager_creator">Original Manager Creator</string>
@@ -110,20 +110,20 @@
 
   <string name="installer_file_save_success">Saved to %s</string>
   <string name="installer_file_save_failed">Failed to save %s</string>
-  <string name="installer_install_success">Successfully installed Shiggy</string>
-  <string name="installer_install_aborted">Cancelled Shiggy installation</string>
-  <string name="installer_uninstall_new">Please uninstall your current version of Shiggy in order to continue!</string>
-  <string name="installer_uninstall_success">Successfully uninstalled Shiggy</string>
+  <string name="installer_install_success">Successfully installed Valenced</string>
+  <string name="installer_install_aborted">Cancelled Valenced installation</string>
+  <string name="installer_uninstall_new">Please uninstall your current version of Valenced in order to continue!</string>
+  <string name="installer_uninstall_success">Successfully uninstalled Valenced</string>
   <string name="installer_uninstall_aborted">Cancelled uninstallation</string>
   <string name="installer_dl_verify_fail">Failed to verify download</string>
   <string name="installer_insufficient_storage">Insufficient storage space!</string>
   <string
     name="installer_banner_minimization"
   >Since battery optimizations have not been disabled, minimizing this screen may abort the installation process!</string>
-  <string name="installer_banner_failure">Installation failed! You can either retry or click this banner to open the Shiggy server for help.</string>
+  <string name="installer_banner_failure">Installation failed! You can retry or open the error log for details.</string>
   <string
     name="installer_banner_success"
-  >Successfully installed Shiggy! Do *NOT* uninstall the manager (this app) as it is required to perform certain types of updates.</string>
+  >Successfully installed Valenced! Do *NOT* uninstall the manager (this app) as it is required to perform certain types of updates.</string>
 
   <string name="install_error_unknown">Installer failure (Unknown reason)</string>
   <string name="install_error_blocked">Installation was blocked</string>
@@ -144,14 +144,14 @@
   <string name="patch_step_restore_cache">Restoring from cache</string>
   <string name="patch_step_dl_kt_apk">Downloading Discord APK</string>
   <string name="patch_step_dl_kotlin">Downloading Kotlin library</string>
-  <string name="patch_step_dl_injector">Downloading ShiggyCord Injector</string>
-  <string name="patch_step_dl_aliuhook">Downloading ShiggyHook library</string>
+  <string name="patch_step_dl_injector">Downloading Injector</string>
+  <string name="patch_step_dl_aliuhook">Downloading Hook library</string>
   <string name="patch_step_dl_smali">Downloading smali patches</string>
   <string name="patch_step_copy_deps">Copying dependencies</string>
   <string name="patch_step_patch_manifests">Patching APK manifest</string>
   <string name="patch_step_patch_icon">Patching app icon</string>
-  <string name="patch_step_add_injector">Adding ShiggyCord injector</string>
-  <string name="patch_step_add_aliuhook">Adding ShiggyHook library</string>
+  <string name="patch_step_add_injector">Adding injector</string>
+  <string name="patch_step_add_aliuhook">Adding hook library</string>
   <string name="patch_step_patch_smali">Applying smali patches</string>
   <string name="patch_step_reorganize_dex">Adding .dex files to APK</string>
   <string name="patch_step_save_metadata">Store metadata</string>
@@ -178,7 +178,7 @@
 
   <string
     name="updater_body"
-  >A new update has been released for Shiggy Manager! It may be required in order to function properly. Would you like to update?</string>
+  >A new update has been released for Valenced Manager! It may be required in order to function properly. Would you like to update?</string>
   <string name="updater_title">Update to v%s</string>
   <string name="updater_check_fail">Failed to check for updates!</string>
   <string name="updater_update_fail">Failed to update! Please download and install the update manually!</string>
@@ -197,7 +197,7 @@
   <string name="patchopts_pkgname_title">Package Name</string>
   <string
     name="patchopts_pkgname_desc"
-  >The package name is a unique identifier for all apps. Using different ones can allow for multiple installations of Shiggy.</string>
+  >The package name is a unique identifier for all apps. Using different ones can allow for multiple installations of Valenced.</string>
   <string name="patchopts_pkgname_invalid">Invalid package name!</string>
   <string name="patchopts_pkgname_taken">Target app will be overwritten!</string>
   <string name="patchopts_pkgname_ok">Valid package name!</string>
@@ -208,7 +208,7 @@
   <string name="patchopts_debuggable_title">Debuggable</string>
   <string name="patchopts_debuggable_desc">Enable the debuggable manifest flag. Only use this if you know what you are doing!</string>
   <string name="patchopts_icon_title">Replace app icon</string>
-  <string name="patchopts_icon_desc">Change the app\'s icon to Shiggy\'s icon (or a custom one) instead of Discord\'s.</string>
+  <string name="patchopts_icon_desc">Change the app\'s icon to Valenced\'s icon (or a custom one) instead of Discord\'s.</string>
   <string name="patchopts_divider_basic">Basic</string>
   <string name="patchopts_divider_advanced">Advanced</string>
   <string name="patchopts_warning_invalid_iconopts">The selected icon options are invalid!</string>
@@ -219,12 +219,12 @@
 
   <string name="iconopts_screen_title">Icon Replacement</string>
   <string name="iconopts_variant_title_old_discord">Old Discord</string>
-  <string name="iconopts_variant_desc_old_discord">The old Discord blurple color and logo from 2021 and prior.</string>
+  <string name="iconopts_variant_desc_old_discord">The old Discord color and logo.</string>
   <string name="iconopts_variant_title_color">Custom Color</string>
   <string name="iconopts_variant_title_image">Custom Image</string>
   <string name="iconopts_variant_desc_discord">Does not alter the original icon, instead only adding the missing monochrome icon to the APK.</string>
-  <string name="iconopts_variant_desc_aliucord">Changes the original icon color to Shiggy\'s branding.</string>
-  <string name="iconopts_variant_desc_shiggy">Changes the original icon color to Shiggy\'s branding.</string>
+  <string name="iconopts_variant_desc_aliucord">Changes the original icon color to Valenced\'s branding.</string>
+  <string name="iconopts_variant_desc_shiggy">Changes the original icon color to Valenced\'s branding.</string>
   <string name="iconopts_variant_desc_color">Select a custom icon background color.</string>
   <string
     name="iconopts_variant_desc_image"
@@ -266,9 +266,9 @@
 
   <string name="notif_group_install_title">Active installation</string>
   <string name="notif_group_install_desc">Progress notifications sent during a minimized installation</string>
-  <string name="notif_install_ready_title">Shiggy installation ready!</string>
+  <string name="notif_install_ready_title">Valenced installation ready!</string>
   <string name="notif_install_ready_desc">Click to install...</string>
-  <string name="notif_install_fail_title">Shiggy failed to install</string>
+  <string name="notif_install_fail_title">Valenced failed to install</string>
   <string name="notif_install_fail_desc">Click to view more info...</string>
 
   <string name="play_protect_warning_title">Play Protect</string>
@@ -284,18 +284,18 @@
 
   <string name="permissions_shizuku_denied">Failed to obtain Shizuku permissions</string>
 
-  <string name="fun_fact_prefix">Fun Fact: %s</string>
-  <string name="fun_fact_1">ShiggyCord on first release was meant to be custom Kettu build!</string>
-  <string name="fun_fact_2">The refreshed UI inside the settings was made from developer boredom</string>
-  <string name="fun_fact_3">ShiggyCord as first vendetta like client used to show users the built in plugins and even add extra ones!</string>
-  <string name="fun_fact_4">You love boys, don\'t you?</string>
-  <string name="fun_fact_5">Aliucord is the best client with old discord UI</string>
-  <string name="fun_fact_6">We love you cocobo and pylix!</string>
-  <string name="fun_fact_7">The Vendetta react native part was a total dogshit</string>
-  <string name="fun_fact_8">Vencord and Equicord are not the same.</string>
-  <string name="fun_fact_9">This client can be run on a android TV!</string>
-  <string name="fun_fact_10">The Main Developer one and half a year ago didn\'t even know how to code</string>
-  <string name="fun_fact_11">This client does not support iOS!</string>
-  <string name="fun_fact_12">Boom!</string>
+  <string name="fun_fact_prefix">Valenced: %s</string>
+  <string name="fun_fact_1">Valenced runs on modern Discord Android using high-performance Hermes bytecode!</string>
+  <string name="fun_fact_2">Valenced Manager supports multiple independent Discord installations.</string>
+  <string name="fun_fact_3">Custom app icons are patched byte-for-byte in binary XML and ARSC.</string>
+  <string name="fun_fact_4">Each Valenced installation can have distinct package names and themes.</string>
+  <string name="fun_fact_5">Valenced features a native Xposed bridge for low-level optimizations.</string>
+  <string name="fun_fact_6">Full Material You and AMOLED pitch-black themes are supported.</string>
+  <string name="fun_fact_7">LSPatch seamlessly injects the Valenced Xposed module without root.</string>
+  <string name="fun_fact_8">SessionInstaller and Shizuku guarantee smooth on-device installations.</string>
+  <string name="fun_fact_9">You can reconfigure installed instances anytime from the Home screen!</string>
+  <string name="fun_fact_10">Signature Valenced Cyan is #37EBFF.</string>
+  <string name="fun_fact_11">Fast, clean, and built for speed and precision.</string>
+  <string name="fun_fact_12">Enjoy Valenced!</string>
 
 </resources>

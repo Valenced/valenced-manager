@@ -172,7 +172,7 @@ class PatchingScreen(private val data: PatchOptions) : Screen, Parcelable {
                                     iconColor = MaterialTheme.colorScheme.error,
                                     outlineColor = null,
                                     containerColor = MaterialTheme.colorScheme.errorContainer,
-                                    onClick = { handler.openUri("https://discord.gg/nQykFF9Ud6") },
+                                    onClick = { handler.openUri("https://discord.gg/dtBTQHYSx4") },
                                     modifier =
                                             Modifier.padding(bottom = VERTICAL_PADDING)
                                                     .fillMaxWidth(),

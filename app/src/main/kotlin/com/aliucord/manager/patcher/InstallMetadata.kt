@@ -5,7 +5,7 @@ import com.aliucord.manager.ui.screens.patchopts.PatchOptions
 import kotlinx.serialization.Serializable
 
 /**
- * Data stored inside patched APKs as ~~"aliucord.json"~~ "shiggy.json" in order to preserve install-time information about Aliucord and the Manager.
+ * Data stored inside patched APKs as "valenced.json" in order to preserve install-time information about Valenced and the Manager.
  */
 @Serializable
 data class InstallMetadata(
@@ -25,27 +25,35 @@ data class InstallMetadata(
     val managerVersion: SemVer,
 
     /**
-     * Version (commit hash) of the Aliuhook build that was injected into the APK.
+     * Version (commit hash) of the hook build injected into the APK.
      */
-    val aliuhookVersion: SemVer?,
+    val aliuhookVersion: SemVer? = null,
 
     /**
-     * Version of the injector build that was injected into the APK.
+     * Version of the injector build injected into the APK.
      */
-    val injectorVersion: SemVer?,
+    val injectorVersion: SemVer? = null,
 
     /**
-     * Version of the smali patches that were applied onto the APK.
+     * Version of the smali patches applied onto the APK.
      */
-    val patchesVersion: SemVer?,
+    val patchesVersion: SemVer? = null,
 
     /**
      * Version of LSPatch used to inject Xposed module into the APK.
      */
-    val lspatchVersion: Int?,
+    val lspatchVersion: Int? = null,
 
     /**
-     * Version of ShiggyXposed embedded into the APK.
+     * Version of Valenced Xposed embedded into the APK.
      */
-    val shiggyXposedVersion: SemVer?,
-)
+    val valencedXposedVersion: SemVer? = null,
+
+    /**
+     * Legacy field for backward compatibility with older installs.
+     */
+    val shiggyXposedVersion: SemVer? = null,
+) {
+    val xposedVersion: SemVer?
+        get() = valencedXposedVersion ?: shiggyXposedVersion
+}

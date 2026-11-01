@@ -1,1 +1,38 @@
-<bitmap xmlns:android="http://schemas.android.com/apk/res/android" android:src="@drawable/ic_launcher" android:gravity="center" />
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+  <group
+      android:scaleX="0.140625"
+      android:scaleY="0.140625"
+      android:translateX="18.0"
+      android:translateY="18.0">
+    <!-- Outer circle ring -->
+    <path
+        android:pathData="M406,255.5 C406,338.343 338.843,405.5 256,405.5 C173.157,405.5 106,338.343 106,255.5 C106,172.657 173.157,105.5 256,105.5 C338.843,105.5 406,172.657 406,255.5Z"
+        android:strokeWidth="24"
+        android:strokeColor="#0D2326" />
+
+    <!-- Outer ring dots / electrons -->
+    <path
+        android:fillColor="#0D2326"
+        android:pathData="M256.5,405 m -20,0 a 20,20 0 1,0 40,0 a 20,20 0 1,0 -40,0 M256.5,106 m -20,0 a 20,20 0 1,0 40,0 a 20,20 0 1,0 -40,0 M107,255.5 m -20,0 a 20,20 0 1,0 40,0 a 20,20 0 1,0 -40,0 M406,255.5 m -20,0 a 20,20 0 1,0 40,0 a 20,20 0 1,0 -40,0" />
+
+    <!-- Inner circle ring -->
+    <path
+        android:pathData="M340,255.5 C340,301.892 302.392,339.5 256,339.5 C209.608,339.5 172,301.892 172,255.5 C172,209.108 209.608,171.5 256,171.5 C302.392,171.5 340,209.108 340,255.5Z"
+        android:strokeWidth="24"
+        android:strokeColor="#06181A" />
+
+    <!-- Inner ring dots / electrons -->
+    <path
+        android:fillColor="#0D2326"
+        android:pathData="M196.603,196.103 m -20,0 a 20,20 0 1,0 40,0 a 20,20 0 1,0 -40,0 M315.397,314.897 m -20,0 a 20,20 0 1,0 40,0 a 20,20 0 1,0 -40,0" />
+
+    <!-- Center nucleus -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M226.464,251.712 C224.469,243.094 229.491,234.397 237.952,231.816 C240.407,231.067 242.659,229.765 244.535,228.011 C250.999,221.966 261.033,221.961 267.491,228 C269.365,229.752 271.616,231.052 274.07,231.799 C282.529,234.372 287.542,243.064 285.539,251.684 C284.958,254.186 284.957,256.787 285.535,259.288 C287.53,267.906 282.509,276.603 274.048,279.185 C271.593,279.934 269.341,281.236 267.465,282.99 C261.001,289.035 250.967,289.039 244.509,283.001 C242.635,281.248 240.384,279.949 237.929,279.202 C229.471,276.629 224.458,267.936 226.461,259.316 C227.042,256.814 227.043,254.213 226.464,251.712 Z" />
+  </group>
+</vector>

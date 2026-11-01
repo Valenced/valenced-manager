@@ -6,7 +6,7 @@ import io.ktor.client.request.header
 import io.ktor.client.request.url
 import io.ktor.http.HttpHeaders
 
-class ShiggyGithubService(
+class ValencedGithubService(
         private val http: HttpService,
 ) {
     /** Fetches all the Manager releases with a 60s local cache. */

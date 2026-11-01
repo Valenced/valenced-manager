@@ -52,7 +52,7 @@ object InstallNotifications {
                 NotificationCompat.Builder(context, CHANNEL_ID)
                         .setDefaults(Notification.DEFAULT_LIGHTS or Notification.DEFAULT_SOUND)
                         .setAutoCancel(true)
-                        .setSmallIcon(R.drawable.ic_rounded_shiggy)
+                        .setSmallIcon(R.drawable.ic_valenced_logo)
                         .setContentTitle(context.getString(title))
                         .setContentText(context.getString(description))
                         .setContentIntent(

@@ -12,7 +12,7 @@ import com.aliucord.manager.manager.InstallerManager
 import com.aliucord.manager.manager.download.IDownloadManager
 import com.aliucord.manager.manager.download.KtorDownloadManager
 import com.aliucord.manager.network.services.AliucordGithubService
-import com.aliucord.manager.network.services.ShiggyGithubService
+import com.aliucord.manager.network.services.ValencedGithubService
 import com.aliucord.manager.network.utils.SemVer
 import com.aliucord.manager.network.utils.getOrThrow
 import com.aliucord.manager.util.*
@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlin.system.exitProcess
 
 class UpdaterViewModel(
-    private val github: ShiggyGithubService,
+    private val github: ValencedGithubService,
     private val downloader: KtorDownloadManager,
     private val installers: InstallerManager,
     private val application: Application,

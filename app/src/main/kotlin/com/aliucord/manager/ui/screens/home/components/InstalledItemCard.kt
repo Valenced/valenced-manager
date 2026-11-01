@@ -35,7 +35,7 @@ fun InstalledItemCard(
             defaultElevation = 3.dp,
         ),
         modifier = modifier
-            .width(IntrinsicSize.Max),
+            .fillMaxWidth(),
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(24.dp),
@@ -108,7 +108,7 @@ fun InstalledItemCard(
                 }
                 SegmentedButton(
                     icon = painterResource(R.drawable.ic_info),
-                    text = stringResource(R.string.action_open_info),
+                    text = "Info",
                     onClick = onOpenInfo,
                 )
                 SegmentedButton(

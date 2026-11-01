@@ -32,7 +32,7 @@ object Signer : KoinComponent {
 
         // Create new keystore if it doesn't exist
         if (!paths.keystoreFile.exists()) {
-            paths.shiggyDir.mkdirs()
+            paths.valencedDir.mkdirs()
             newKeystore(paths.keystoreFile)
         }
 

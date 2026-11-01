@@ -26,7 +26,7 @@ fun RowScope.SegmentedButton(
             .clickable(onClick = onClick)
             .background(MaterialTheme.colorScheme.surfaceContainerHigh)
             .weight(1f)
-            .padding(12.dp)
+            .padding(vertical = 12.dp, horizontal = 4.dp)
     ) {
         Icon(
             painter = icon,
@@ -36,7 +36,7 @@ fun RowScope.SegmentedButton(
 
         Text(
             text = text,
-            style = MaterialTheme.typography.labelLarge,
+            style = MaterialTheme.typography.labelMedium,
             color = textColor,
             maxLines = 1,
             modifier = Modifier.basicMarquee(),

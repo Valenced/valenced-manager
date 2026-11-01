@@ -44,7 +44,7 @@ class DownloadAliuhookStep : DownloadStep(), IDexProvider, KoinComponent {
     override val dexPriority = 0
     override val dexCount = 1
     override fun getDexFiles(): List<ByteArray> {
-        val dexBytes = ZipReader(targetFile).use { zip ->
+        val dexBytes = ZipReader(targetFile.absolutePath).use { zip ->
             zip.openEntry("classes.dex")?.read()
                 ?: throw IllegalStateException("No prebuilt classes.dex in downloaded aliuhook build")
         }

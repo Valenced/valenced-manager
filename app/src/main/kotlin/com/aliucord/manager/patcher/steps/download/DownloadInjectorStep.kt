@@ -92,5 +92,5 @@ class DownloadInjectorStep : DownloadStep(), IDexProvider, KoinComponent {
 
     override val dexCount = 1
     override val dexPriority = 3
-    override fun getDexFiles() = listOf(targetFile.readBytes())
+    override fun getDexFiles(): List<ByteArray> = listOf(targetFile.readBytes())
 }

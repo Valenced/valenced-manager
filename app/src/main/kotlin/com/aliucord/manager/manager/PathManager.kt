@@ -12,15 +12,26 @@ class PathManager(
     private val context: Context,
 ) {
     /**
-     * The Shiggy folder where shared Shiggy files are stored.
-     * Standard path: `~/Shiggy`
+     * The Valenced folder where shared files are stored.
+     * Standard path: `~/Valenced`
+     */
+    val valencedDir = Environment.getExternalStorageDirectory().resolve("Valenced")
+
+    /**
+     * Legacy folder fallback.
      */
     val shiggyDir = Environment.getExternalStorageDirectory().resolve("Shiggy")
 
     /**
      * Global keystore used for signing APKs.
      */
-    val keystoreFile = shiggyDir.resolve("ks.keystore")
+    val keystoreFile = if (valencedDir.resolve("ks.keystore").exists()) {
+        valencedDir.resolve("ks.keystore")
+    } else if (shiggyDir.resolve("ks.keystore").exists()) {
+        shiggyDir.resolve("ks.keystore")
+    } else {
+        valencedDir.resolve("ks.keystore")
+    }
 
     /**
      * The internal directory used for downloading components related to patching, and
@@ -46,6 +57,11 @@ class PathManager(
     val cacheDownloadDir = context.cacheDir.resolve("downloads")
 
     /**
+     * Directory used for logs created during the installation process.
+     */
+    val logsDir = context.filesDir.resolve("logs")
+
+    /**
      * A permanent location used for storing custom patching components.
      * This does not get moved to an Android-managed cache dir when
      * not currently patching.
@@ -53,11 +69,18 @@ class PathManager(
     val customComponentsDir = patchingDir.resolve("custom")
 
     /**
+     * Directory where custom local components can be placed.
+     */
+    val customDir = valencedDir.resolve("custom")
+
+    /**
      * Delete all the cache dirs and recreate them.
      */
     fun clearCache() {
-        for (dir in arrayOf(patchingDir, cacheDownloadDir, context.cacheDir))
-            dir.deleteRecursively() && dir.mkdirs()
+        for (dir in arrayOf(patchingDir, cacheDownloadDir, context.cacheDir, context.externalCacheDir)) {
+            dir?.deleteRecursively()
+            dir?.mkdirs()
+        }
     }
 
     /**
@@ -106,9 +129,41 @@ class PathManager(
     fun cachedKotlinDex() = patchingDownloadDir
         .resolve("kotlin.dex")
 
-    fun cachedShiggyXposed(version: SemVer) = patchingDownloadDir
+    fun cachedValencedXposed(version: SemVer) = patchingDownloadDir
         .resolve("wt-xposed")
         .resolve("$version.apk")
+
+    fun cachedShiggyXposed(version: SemVer) = cachedValencedXposed(version)
+
+    fun customKotlin() = customDir.resolve("kotlin.dex")
+    fun customInjector() = listCustomFiles(customDir.resolve("injector"))
+    fun customAliuhook() = listCustomFiles(customDir.resolve("aliuhook"))
+    fun customPatches() = listCustomFiles(customDir.resolve("patches"))
+    fun customSmali() = customDir.resolve("smali")
+
+    fun cachedBaseApk(version: Int) = patchingDownloadDir
+        .resolve("discord-$version-base.apk")
+
+    fun cachedLanguageApk(version: Int) = patchingDownloadDir
+        .resolve("discord-$version-lang.apk")
+
+    fun cachedResourcesApk(version: Int) = patchingDownloadDir
+        .resolve("discord-$version-resources.apk")
+
+    fun cachedLibApk(version: Int) = patchingDownloadDir
+        .resolve("discord-$version-lib.apk")
+
+    fun cachedAliuhook(version: SemVer) = patchingDownloadDir
+        .resolve("aliuhook")
+        .resolve("$version.zip")
+
+    fun cachedInjector(version: SemVer) = patchingDownloadDir
+        .resolve("injector")
+        .resolve("$version.zip")
+
+    fun cachedPatches(version: SemVer) = patchingDownloadDir
+        .resolve("patches")
+        .resolve("$version.dex")
 
     /**
      * The temporary working directory of a currently executing patching process.
@@ -133,7 +188,7 @@ class PathManager(
 
             return files
                 .map { it.nameWithoutExtension }
-                .mapNotNull(SemVer::parseOrNull)
+                .mapNotNull(SemVer.Companion::parseOrNull)
         }
     }
 }

@@ -27,26 +27,18 @@ fun ProjectHeader(
             modifier = modifier,
     ) {
         Image(
-                painter =
-                        painterResource(
-                                if (aliucord) R.drawable.ic_aliucord_logo
-                                else R.drawable.ic_rounded_shiggy
-                        ),
+                painter = painterResource(R.drawable.ic_valenced_logo),
                 contentDescription = null,
                 modifier = Modifier.padding(bottom = 6.dp).size(88.dp),
         )
 
         Text(
-                text = stringResource(if (aliucord) R.string.aliucord else R.string.shiggy),
+                text = stringResource(R.string.app_name),
                 style = MaterialTheme.typography.titleMedium.copy(fontSize = 26.sp)
         )
 
         Text(
-                text =
-                        stringResource(
-                                if (aliucord) R.string.aliucord_description
-                                else R.string.app_description
-                        ),
+                text = stringResource(R.string.app_description),
                 style =
                         MaterialTheme.typography.titleSmall.copy(
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = .6f)
@@ -58,7 +50,7 @@ fun ProjectHeader(
                 horizontalArrangement = Arrangement.Center,
         ) {
             TextButton(
-                    onClick = { uriHandler.openUri("https://github.com/kmmiio99o/ShiggyCord") }
+                    onClick = { uriHandler.openUri("https://github.com/Valenced/valenced-manager") }
             ) {
                 Icon(
                         painter = painterResource(R.drawable.ic_account_github_white_24dp),
@@ -68,7 +60,7 @@ fun ProjectHeader(
                 Text(text = stringResource(R.string.github))
             }
 
-            TextButton(onClick = { uriHandler.openUri("https://discord.gg/nQykFF9Ud6") }) {
+            TextButton(onClick = { uriHandler.openUri("https://discord.gg/dtBTQHYSx4") }) {
                 Icon(
                         painter = painterResource(R.drawable.ic_discord),
                         contentDescription = stringResource(R.string.support_server),
