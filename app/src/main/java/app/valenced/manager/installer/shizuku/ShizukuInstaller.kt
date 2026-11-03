@@ -35,7 +35,9 @@ class ShizukuInstaller(private val context: Context) : Installer, KoinComponent 
         }
 
         val commitResult = executeShellCommand("pm install-commit $sessionId")
-        if (!commitResult.startsWith("Success")) throw RuntimeException("Failed to install: $commitResult")
+        if (!commitResult.startsWith("Success") && !commitResult.contains("Completed with warning(s)")) {
+            throw RuntimeException("Failed to install: $commitResult")
+        }
 
         installManager.getInstalled()
     }

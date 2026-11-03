@@ -1,50 +1,33 @@
 package app.valenced.manager.installer.shizuku
 
 import android.content.pm.PackageManager
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import rikka.shizuku.Shizuku
 import rikka.shizuku.Shizuku.OnRequestPermissionResultListener
+import kotlin.coroutines.resume
 
-@OptIn(DelicateCoroutinesApi::class)
 object ShizukuPermissions {
 
     private const val REQUEST_CODE = 1
 
-    private val _permissionsGranted = MutableSharedFlow<Boolean>(replay = 0)
-    private lateinit var permissionResultListener: OnRequestPermissionResultListener
-
-    fun requestShizukuPermissions() {
-        if (!Shizuku.pingBinder()) {
-            GlobalScope.launch { _permissionsGranted.emit(false) }
-            return
-        }
-        if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
-            GlobalScope.launch { _permissionsGranted.emit(true) }
-            return
-        }
-
-        Shizuku.addRequestPermissionResultListener(permissionResultListener)
-        Shizuku.requestPermission(REQUEST_CODE)
-    }
-
     suspend fun waitShizukuPermissions(): Boolean {
-        requestShizukuPermissions()
-        return _permissionsGranted.first()
-    }
+        if (!Shizuku.pingBinder()) return false
+        if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) return true
 
-    init {
-        permissionResultListener = OnRequestPermissionResultListener { requestCode, grantResult ->
-            if (requestCode != REQUEST_CODE) return@OnRequestPermissionResultListener
+        return suspendCancellableCoroutine { continuation ->
+            lateinit var listener: OnRequestPermissionResultListener
+            listener = OnRequestPermissionResultListener { requestCode, grantResult ->
+                if (requestCode != REQUEST_CODE) return@OnRequestPermissionResultListener
 
-            Shizuku.removeRequestPermissionResultListener(permissionResultListener)
-
-            GlobalScope.launch {
-                _permissionsGranted.emit(grantResult == PackageManager.PERMISSION_GRANTED)
+                Shizuku.removeRequestPermissionResultListener(listener)
+                continuation.resume(grantResult == PackageManager.PERMISSION_GRANTED)
             }
+
+            Shizuku.addRequestPermissionResultListener(listener)
+            continuation.invokeOnCancellation {
+                Shizuku.removeRequestPermissionResultListener(listener)
+            }
+            Shizuku.requestPermission(REQUEST_CODE)
         }
     }
 
