@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/Valenced/valenced-manager/compare/v1.1.1...v1.1.2) (2026-11-03)
+
+
+### Bug Fixes
+
+* handle Shizuku install warnings and permission wait ([1dcd161](https://github.com/Valenced/valenced-manager/commit/1dcd161ccd0c0b76864b00704bfd6190db166869))
+
 ## [1.1.1](https://github.com/Valenced/valenced-manager/compare/v1.1.0...v1.1.1) (2026-10-27)
 
 
