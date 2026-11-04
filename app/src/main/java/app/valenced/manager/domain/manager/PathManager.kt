@@ -37,6 +37,11 @@ class PathManager(private val context: Context) {
 
     val updateApk = context.filesDir.resolve("update.apk")
 
+    /**
+     * The picked launcher icon, laid out as an adaptive icon layer
+     */
+    val customIcon = context.filesDir.resolve("custom_icon.png")
+
     fun discordDownloads(versionCode: String) = discordDownloadsDir.resolve(versionCode)
 
     /**

@@ -16,6 +16,8 @@ import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.collection.ObjectList
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.graphics.drawable.toBitmap
 import app.valenced.manager.BuildConfig
@@ -57,6 +59,9 @@ fun rememberFileSaveLauncher(content: String, mimeType: String = "text/plain"): 
         }
     }
 }
+
+/** The color as #RRGGBB, without alpha */
+fun Color.toHex() = "#%06X".format(toArgb() and 0xFFFFFF)
 
 private val cachedBitmaps: MutableMap<Int, MutableMap<Int, Bitmap>> = mutableMapOf()
 

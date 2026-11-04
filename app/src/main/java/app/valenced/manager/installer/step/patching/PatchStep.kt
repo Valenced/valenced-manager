@@ -12,6 +12,8 @@ import app.reseam.sdk.patch
 import app.valenced.manager.BuildConfig
 import app.valenced.manager.R
 import app.valenced.manager.domain.manager.BundleManager
+import app.valenced.manager.domain.manager.LauncherIcon
+import app.valenced.manager.domain.manager.PathManager
 import app.valenced.manager.domain.manager.PreferenceManager
 import app.valenced.manager.installer.step.Step
 import app.valenced.manager.installer.step.StepGroup
@@ -23,6 +25,7 @@ import app.valenced.manager.installer.step.download.DownloadModStep
 import app.valenced.manager.installer.step.download.DownloadResourcesStep
 import app.valenced.manager.installer.util.Logger
 import app.valenced.manager.installer.util.Signer
+import app.valenced.manager.utils.toHex
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.core.component.inject
@@ -39,6 +42,7 @@ class PatchStep(
 
     private val preferences: PreferenceManager by inject()
     private val bundleManager: BundleManager by inject()
+    private val paths: PathManager by inject()
 
     override val group = StepGroup.PATCHING
     override val nameRes = R.string.step_patch
@@ -75,15 +79,32 @@ class PatchStep(
 
     private fun selection(module: File) = PatchSelection(
         enable = listOfNotNull(DEBUGGABLE.takeIf { preferences.debuggable }),
-        disable = listOfNotNull(ICON.takeUnless { preferences.patchIcon }),
+        disable = listOfNotNull(ICON.takeIf { preferences.launcherIcon == LauncherIcon.DISCORD }),
         options = mapOf(
             VALENCED to mapOf("module" to OptionValue.Path(module.absolutePath)),
             PACKAGE_NAME to mapOf(
                 "packageName" to OptionValue.Text(preferences.packageName.ifBlank { BuildConfig.MODDED_APP_PACKAGE_NAME })
             ),
             APP_NAME to mapOf("appName" to OptionValue.Text(preferences.appName)),
-        ),
+        ) + iconOptions(),
     )
+
+    private fun iconOptions() = when (preferences.launcherIcon) {
+        LauncherIcon.COLOR -> {
+            val background = preferences.launcherIconColor
+            mapOf(
+                ICON to mapOf(
+                    "background" to OptionValue.Text(background.toHex()),
+                    "foreground" to OptionValue.Text(LauncherIcon.logoColor(background).toHex()),
+                )
+            )
+        }
+        LauncherIcon.CUSTOM -> {
+            check(paths.customIcon.isFile) { "The custom app icon is missing, pick it again in Customization" }
+            mapOf(ICON to mapOf("icon" to OptionValue.Path(paths.customIcon.absolutePath)))
+        }
+        else -> emptyMap()
+    }
 
     private fun Logger.log(event: RunEvent) = when (event) {
         is RunEvent.Info -> i(event.message)

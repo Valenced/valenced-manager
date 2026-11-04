@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.collectAsLazyPagingItems
 import app.valenced.manager.BuildConfig
 import app.valenced.manager.R
+import app.valenced.manager.domain.manager.PathManager
 import app.valenced.manager.domain.manager.PreferenceManager
 import app.valenced.manager.ui.components.SegmentedButton
 import app.valenced.manager.ui.screen.installer.InstallerScreen
@@ -64,6 +65,7 @@ class HomeScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val prefs: PreferenceManager = get()
+        val paths: PathManager = get()
         val viewModel: HomeViewModel = getScreenModel()
 
         val currentVersion = remember {
@@ -109,7 +111,9 @@ class HomeScreen : Screen {
                     .fillMaxWidth()
             ) {
                 AppIcon(
-                    customIcon = prefs.patchIcon,
+                    icon = prefs.launcherIcon,
+                    customIcon = paths.customIcon,
+                    color = prefs.launcherIconColor,
                     releaseChannel = targetVersion?.type,
                     modifier = Modifier.size(60.dp)
                 )

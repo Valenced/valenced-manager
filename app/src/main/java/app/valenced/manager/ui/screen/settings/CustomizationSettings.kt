@@ -1,5 +1,7 @@
 package app.valenced.manager.ui.screen.settings
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
@@ -16,16 +18,27 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import app.valenced.manager.R
+import app.valenced.manager.domain.manager.BundleManager
+import app.valenced.manager.domain.manager.LauncherIcon
+import app.valenced.manager.domain.manager.PathManager
 import app.valenced.manager.domain.manager.PreferenceManager
-import app.valenced.manager.ui.components.settings.SettingsSwitch
+import app.valenced.manager.ui.components.settings.SettingsItem
 import app.valenced.manager.ui.components.settings.SettingsTextField
+import app.valenced.manager.ui.viewmodel.settings.CustomizationSettingsViewModel
+import app.valenced.manager.ui.widgets.dialog.IconColorDialog
+import app.valenced.manager.ui.widgets.settings.AppIconPicker
 import app.valenced.manager.utils.DimenUtils
 import org.koin.androidx.compose.get
 
@@ -35,7 +48,26 @@ class CustomizationSettings: Screen {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun Content() {
         val prefs: PreferenceManager = get()
+        val paths: PathManager = get()
+        val bundleManager: BundleManager = get()
+        val viewModel: CustomizationSettingsViewModel = getScreenModel()
+        val pickImage = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.let { viewModel.setCustomIcon(it) }
+        }
+        var showColorDialog by remember { mutableStateOf(false) }
         val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+
+        if (showColorDialog) {
+            IconColorDialog(
+                initial = prefs.launcherIconColor,
+                onDismiss = { showColorDialog = false },
+                onConfirm = {
+                    prefs.launcherIconColor = it
+                    prefs.launcherIcon = LauncherIcon.COLOR
+                    showColorDialog = false
+                }
+            )
+        }
 
         Scaffold(
             topBar = { TitleBar(scrollBehavior) },
@@ -56,13 +88,23 @@ class CustomizationSettings: Screen {
                     }
                 )
 
-                SettingsSwitch(
-                    label = stringResource(R.string.settings_app_icon),
-                    secondaryLabel = stringResource(R.string.settings_app_icon_description),
-                    pref = prefs.patchIcon,
-                    onPrefChange = {
-                        prefs.patchIcon = it
+                SettingsItem(
+                    text = { Text(stringResource(R.string.settings_app_icon)) },
+                    secondaryText = {
+                        if (viewModel.hasCustomIcon) Text(stringResource(R.string.settings_app_icon_description))
                     }
+                )
+
+                AppIconPicker(
+                    selected = prefs.launcherIcon,
+                    customIcon = paths.customIcon,
+                    hasCustomIcon = viewModel.hasCustomIcon,
+                    customIconVersion = viewModel.customIconVersion,
+                    color = prefs.launcherIconColor,
+                    releaseChannel = bundleManager.discordVersion?.type,
+                    onSelect = { prefs.launcherIcon = it },
+                    onPickColor = { showColorDialog = true },
+                    onPickCustom = { pickImage.launch("image/*") }
                 )
             }
         }

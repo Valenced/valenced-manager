@@ -6,6 +6,7 @@
 
     <string name="msg_cleared_cache">Cache cleared successfully</string>
     <string name="msg_load_fail">Failed to load commits</string>
+    <string name="msg_custom_icon_failed">Couldn\'t use that image as the app icon</string>
     <string name="msg_coming_soon">Coming soon</string>
     <string name="msg_seven_left">7 more taps</string>
     <string name="msg_five_left">5 more taps</string>
@@ -59,6 +60,7 @@
     <string name="action_copy_logs">Copy logs</string>
     <string name="action_clear_cache">Clear cache</string>
     <string name="action_confirm">Confirm</string>
+    <string name="action_cancel">Cancel</string>
     <string name="action_start_update">Start update</string>
     <string name="action_install">Install</string>
     <string name="action_update">Update</string>
@@ -123,8 +125,17 @@
     <string name="settings_customization">Customization</string>
     <string name="settings_customization_description">Customize your Valenced installation</string>
     <string name="settings_app_name">App name</string>
-    <string name="settings_app_icon">Replace app icon</string>
-    <string name="settings_app_icon_description">Uses the Valenced icon instead of Discord\'s</string>
+    <string name="settings_app_icon">App icon</string>
+    <string name="settings_app_icon_description">Tap Custom again to pick another image</string>
+    <string name="launcher_icon_discord">Discord</string>
+    <string name="launcher_icon_valenced">Valenced</string>
+    <string name="launcher_icon_color">Color</string>
+    <string name="launcher_icon_custom">Custom</string>
+    <string name="icon_color_title">Icon color</string>
+    <string name="icon_color_hue">Hue</string>
+    <string name="icon_color_saturation">Saturation</string>
+    <string name="icon_color_brightness">Brightness</string>
+    <string name="icon_color_hex">Hex</string>
 
     <string name="settings_advanced">Advanced</string>
     <string name="settings_advanced_description">Modify downloading and installation</string>
